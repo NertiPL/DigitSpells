@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     public TMP_Text numholder;
+    public Image staminaBar;
 
     private void Start()
     {
@@ -83,4 +84,6 @@ public class GameManager : MonoBehaviour
 
 
     }
+
+
 }
