@@ -58,6 +58,8 @@ public class PlayerController : MonoBehaviour
             Dash();          
         }
 
+        Attack();
+
     }
 
     void Dash()
@@ -91,5 +93,11 @@ public class PlayerController : MonoBehaviour
             stamina = 100;
             CancelInvoke("RegenStamina");
         }
+    }
+
+    // TUUUUUU
+    void Attack()
+    {
+        
     }
 }
