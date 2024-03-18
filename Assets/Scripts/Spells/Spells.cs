@@ -26,4 +26,5 @@ public class Spells : ScriptableObject
     public int lvl;
     public SpellType spellType;
     public Difficulty difficulty;
+    public Sprite sprite;
 }

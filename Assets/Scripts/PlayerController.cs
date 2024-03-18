@@ -11,10 +11,15 @@ public class PlayerController : MonoBehaviour
     public float stamina = 100f;
     public float staminaCost = 20f;
 
+    public float hp = 100f;
+
     public float dashPower= 20f;
 
     Vector2 maxStaminaBarSize;
     Vector2 maxStaminaPos;
+
+    Vector2 maxHpBarSize;
+    Vector2 maxHpPos;
 
     bool canDash=true;
     void Start()
@@ -23,6 +28,9 @@ public class PlayerController : MonoBehaviour
 
         maxStaminaBarSize = GameManager.instance.staminaBar.rectTransform.sizeDelta;
         maxStaminaPos = GameManager.instance.staminaBar.rectTransform.position;
+
+        maxHpBarSize = GameManager.instance.healthBar.rectTransform.sizeDelta;
+        maxHpPos = GameManager.instance.healthBar.rectTransform.position;
     }
 
     void Update()
@@ -74,8 +82,13 @@ public class PlayerController : MonoBehaviour
     }
     void BarUpdater()
     {
+        //stamina
         GameManager.instance.staminaBar.rectTransform.sizeDelta = new Vector2(maxStaminaBarSize.x * stamina / 100, maxStaminaBarSize.y);
         GameManager.instance.staminaBar.rectTransform.position = new Vector2((maxStaminaBarSize.x * stamina / 100)/2 +19, maxStaminaPos.y);
+
+        //health
+        GameManager.instance.healthBar.rectTransform.sizeDelta = new Vector2(maxHpBarSize.x * hp / 100, maxHpBarSize.y);
+        GameManager.instance.healthBar.rectTransform.position = new Vector2((maxHpBarSize.x * hp / 100) / 2 + 19, maxHpPos.y);
     }
 
     void CanDashAgain()
@@ -94,10 +107,13 @@ public class PlayerController : MonoBehaviour
             CancelInvoke("RegenStamina");
         }
     }
-
-    // TUUUUUU
     void Attack()
     {
         
+    }
+
+    public void GetHit(float dmg)
+    {
+        hp -= dmg;
     }
 }
