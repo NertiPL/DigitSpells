@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
 
     public GameObject gameOverPanel;
 
+    public List<Spells> chosenSpells;
+
     private void Start()
     {
         if (instance == null)

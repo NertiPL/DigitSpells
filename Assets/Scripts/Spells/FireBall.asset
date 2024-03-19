@@ -17,3 +17,5 @@ MonoBehaviour:
   lvl: 1
   spellType: 0
   difficulty: 1
+  sprite: {fileID: 0}
+  prefab: {fileID: 7113836899291956607, guid: 8426b089daa3b6147b0a33955e6ca207, type: 3}

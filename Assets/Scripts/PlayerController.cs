@@ -24,7 +24,14 @@ public class PlayerController : MonoBehaviour
     bool canDash=true;
     public bool isDashing = false;
 
+    public Transform topOfStaff;
+
     public LayerMask enemies;
+
+    public Animator animator;
+
+    GameObject currentAttack;
+
     void Start()
     {
         rb= GetComponent<Rigidbody>();
@@ -124,6 +131,19 @@ public class PlayerController : MonoBehaviour
     }
     void Attack()
     {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            Debug.Log(GameManager.instance.chosenSpells[0].name);
+            var attack = Instantiate(GameManager.instance.chosenSpells[0].prefab, topOfStaff.position, topOfStaff.rotation);
+            attack.GetComponent<MonoBehaviour>().enabled = false;
+            animator.Play("StaffAnimation");    
+            currentAttack = attack;            
+        }
+
+        if(currentAttack != null)
+        {
+            currentAttack.transform.position = topOfStaff.position;
+        }
         
     }
 
@@ -139,4 +159,12 @@ public class PlayerController : MonoBehaviour
             GameManager.instance.GameOver();
         }
     }
+
+    public void midAnimShoot()
+    {
+        currentAttack.GetComponent<MonoBehaviour>().enabled = true;
+        currentAttack = null;
+    }
+
+
 }

@@ -18,6 +18,7 @@ public enum Difficulty
     Impossible
 }
 
+
 [CreateAssetMenu(fileName = "NewSpell", menuName = "Spell", order = 0)]
 public class Spells : ScriptableObject
 {
@@ -27,4 +28,5 @@ public class Spells : ScriptableObject
     public SpellType spellType;
     public Difficulty difficulty;
     public Sprite sprite;
+    public GameObject prefab;
 }
