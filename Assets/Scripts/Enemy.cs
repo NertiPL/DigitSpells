@@ -57,7 +57,7 @@ public class Enemy : MonoBehaviour
 
     private void OnCollisionStay(Collision collision)
     {
-        if (collision.gameObject.tag == "Player" && canCollide)
+        if (collision.gameObject.tag == "Player" && canCollide && !player.GetComponent<PlayerController>().isDashing)
         {
             player.GetComponent<PlayerController>().GetHit(dmgOnCol);
             canCollide = false;

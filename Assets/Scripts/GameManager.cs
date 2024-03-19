@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
 
     public MonoBehaviour player;
 
+    public GameObject gameOverPanel;
+
     private void Start()
     {
         if (instance == null)
@@ -93,6 +95,12 @@ public class GameManager : MonoBehaviour
         }
 
 
+    }
+
+    public void GameOver()
+    {
+        Time.timeScale = 0f;
+        gameOverPanel.SetActive(true);
     }
 
 

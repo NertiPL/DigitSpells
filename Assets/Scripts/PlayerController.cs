@@ -22,6 +22,9 @@ public class PlayerController : MonoBehaviour
     Vector2 maxHpPos;
 
     bool canDash=true;
+    public bool isDashing = false;
+
+    public LayerMask enemies;
     void Start()
     {
         rb= GetComponent<Rigidbody>();
@@ -39,6 +42,8 @@ public class PlayerController : MonoBehaviour
         Movement();
 
         BarUpdater();
+
+        CheckDeath();
     }
 
     void Movement()
@@ -75,10 +80,14 @@ public class PlayerController : MonoBehaviour
         CancelInvoke("RegenStamina");
         stamina -= staminaCost;
         canDash = false;
+        isDashing = true;
+
+        GetComponent<Collider>().excludeLayers=enemies;
 
         rb.AddForce(rb.velocity * dashPower, ForceMode.Impulse);
 
         Invoke("CanDashAgain", 2f);
+        Invoke("StoppedDashing", 1f);
     }
     void BarUpdater()
     {
@@ -96,6 +105,12 @@ public class PlayerController : MonoBehaviour
         canDash = true;
         InvokeRepeating("RegenStamina", 5f, 0.5f);
     }
+    void StoppedDashing()
+    {
+        isDashing = false;
+        GetComponent<Collider>().excludeLayers = 0;
+    }
+    
 
     void RegenStamina()
     {
@@ -115,5 +130,13 @@ public class PlayerController : MonoBehaviour
     public void GetHit(float dmg)
     {
         hp -= dmg;
+    }
+
+    void CheckDeath()
+    {
+        if(hp <= 0)
+        {
+            GameManager.instance.GameOver();
+        }
     }
 }
