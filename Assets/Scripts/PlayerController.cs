@@ -6,6 +6,9 @@ using static UnityEditor.Searcher.SearcherWindow.Alignment;
 public class PlayerController : MonoBehaviour
 {
     Rigidbody rb;
+
+
+    public float sensitivity = 100f;
     public float speed = 10f;
 
     public float stamina = 100f;
@@ -25,8 +28,6 @@ public class PlayerController : MonoBehaviour
     public bool isDashing = false;
 
     public Transform topOfStaff;
-
-    public LayerMask enemies;
 
     public Animator animator;
 
@@ -78,8 +79,17 @@ public class PlayerController : MonoBehaviour
             Dash();          
         }
 
+        Rotation();
         Attack();
 
+    }
+
+    void Rotation()
+    {
+        if (Input.GetMouseButton(2))
+        {
+            transform.Rotate(new Vector3(0, Input.GetAxis("Mouse X"), 0) * Time.fixedDeltaTime *sensitivity);
+        }
     }
 
     void Dash()
@@ -89,7 +99,7 @@ public class PlayerController : MonoBehaviour
         canDash = false;
         isDashing = true;
 
-        GetComponent<Collider>().excludeLayers=enemies;
+        GetComponent<Collider>().excludeLayers=GameManager.instance.enemies;
 
         rb.AddForce(rb.velocity * dashPower, ForceMode.Impulse);
 

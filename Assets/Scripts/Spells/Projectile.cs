@@ -22,4 +22,14 @@ public class Projectile : MonoBehaviour
         rb.velocity += transform.forward * 1 * speed * Time.fixedDeltaTime;
     }
 
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Enemy")
+        {
+            other.gameObject.GetComponent<Enemy>().DealDmg(spell.spellType, spell.LvlChanges(dmg));
+            Destroy(gameObject);
+        }
+    }
+
 }

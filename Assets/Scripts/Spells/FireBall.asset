@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 131bc72f74ec88142aca5a16a6af9a27, type: 3}
   m_Name: FireBall
   m_EditorClassIdentifier: 
+  cd: 0
   name: Kula Ognia
   description: Kula zrobiona z ognia
-  lvl: 1
+  lvl: 4
   spellType: 0
   difficulty: 1
   sprite: {fileID: 0}

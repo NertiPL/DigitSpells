@@ -149,3 +149,4 @@ MonoBehaviour:
   howMany: 1
   spell: {fileID: 11400000, guid: 9ab4e1f2ad0fa5d4c9aee566f9fbac17, type: 2}
   speed: 2
+  dmg: 10

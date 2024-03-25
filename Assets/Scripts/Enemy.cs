@@ -14,7 +14,12 @@ public enum Class
     Sorcerer,
     Healer,
     Dragon,
-    Fish
+    Fish,
+    Slime,
+    Wolf,
+    Skeleton,
+    TrainingDummy,
+    Zombie
 }
 
 public class Enemy : MonoBehaviour
@@ -27,6 +32,8 @@ public class Enemy : MonoBehaviour
     public float hp;
     public Class enemyClass;
     public float dmgOnCol;
+    public List<SpellType> weakSpellType;
+    public List<SpellType> strongSpellType;
 
     Vector3 targetDirection;
     Vector3 newDirection;
@@ -43,6 +50,7 @@ public class Enemy : MonoBehaviour
     }
     private void Update()
     {
+        CheckDeath();
         targetDirection = player.transform.position - transform.position;
         if (!(Vector3.Distance(transform.position, player.transform.position) <= 1f))
         {
@@ -65,9 +73,35 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    public void DealDmg(SpellType spellType, float dmg)
+    {
+        if(weakSpellType.Contains(spellType) && weakSpellType.Count>0)
+        {
+            hp -= dmg/2;
+        }
+        else if(strongSpellType.Contains(spellType) && strongSpellType.Count > 0)
+        {
+            hp -= dmg * 2;
+        }
+        else
+        {
+            hp -= dmg;
+        }
+    }
+
     void CanCollideAgain()
     {
         canCollide = true;
     }
+
+    void CheckDeath()
+    {
+        if (hp<=0)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+
 
 }

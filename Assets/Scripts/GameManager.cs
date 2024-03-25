@@ -4,6 +4,7 @@ using System.Globalization;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class GameManager : MonoBehaviour
     public Image healthBar;
 
     public MonoBehaviour player;
+    public LayerMask enemies;
 
     public GameObject gameOverPanel;
 
@@ -103,6 +105,14 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 0f;
         gameOverPanel.SetActive(true);
+    }
+
+    public void SpecialLeveledSpells(Spells spell)
+    {
+        if (spell.prefab.GetComponent<Projectile>() != null)
+        {
+
+        }
     }
 
 
