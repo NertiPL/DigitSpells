@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 using static UnityEngine.GraphicsBuffer;
 
 public enum Class
@@ -35,12 +36,16 @@ public class Enemy : MonoBehaviour
     public List<SpellType> weakSpellType;
     public List<SpellType> strongSpellType;
 
-    Vector3 targetDirection;
-    Vector3 newDirection;
+    public Vector3 targetDirection;
+    public Vector3 newDirection;
 
-    GameObject player;
+    public GameObject player;
 
-    bool canCollide = true;
+    public bool canCollide = true;
+
+    public Animator animator;
+
+    public float dmg;
 
     private void Start()
     {
@@ -59,11 +64,12 @@ public class Enemy : MonoBehaviour
         }
 
         newDirection = Vector3.RotateTowards(transform.forward, targetDirection, speed*Time.deltaTime, 0.0f);
+        Debug.Log("a");
 
         transform.rotation = Quaternion.LookRotation(newDirection);
     }
 
-    private void OnCollisionStay(Collision collision)
+    public void OnCollisionStay(Collision collision)
     {
         if (collision.gameObject.tag == "Player" && canCollide && !player.GetComponent<PlayerController>().isDashing)
         {
@@ -89,12 +95,12 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void CanCollideAgain()
+    public void CanCollideAgain()
     {
         canCollide = true;
     }
 
-    void CheckDeath()
+    public void CheckDeath()
     {
         if (hp<=0)
         {

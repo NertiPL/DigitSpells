@@ -6,15 +6,16 @@ public enum SpellType
     Fire,
     Water,
     Earth,
-    Thunder
+    Lightning,
+    Healing
 }
 
 public enum Difficulty
 {
-    Easy,
-    Medium,
-    Hard,
-    Impossible
+    Easy, //minimum 2 numbers
+    Medium, // minimum 3 numbers
+    Hard, // minimum 5 numbers
+    Impossible // minimum 8 numbers
 }
 
 
@@ -29,6 +30,7 @@ public class Spells : ScriptableObject
     public Difficulty difficulty;
     public Sprite sprite;
     public GameObject prefab;
+    public bool onTopOnStaff;
 
     public float LvlChanges(float dmgOrHeal)
     {

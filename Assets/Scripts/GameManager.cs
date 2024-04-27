@@ -8,9 +8,17 @@ using Unity.VisualScripting;
 
 public class GameManager : MonoBehaviour
 {
+    public GameObject canvas;
+    
+    int m = 0;
     public static GameManager instance;
 
-    public TMP_Text numholder;
+    public GameObject numholder;
+    public GameObject manaGemInEqPrefab;
+
+    public List<float> numbersEq;
+    public GameObject miniGamePanel;
+
     public Image staminaBar;
 
     public Image healthBar;
@@ -19,24 +27,50 @@ public class GameManager : MonoBehaviour
     public LayerMask enemies;
 
     public GameObject gameOverPanel;
+    public GameObject spellsPanel;
+
+    public GameObject manaGem;
 
     public List<Spells> chosenSpells;
 
-    private void Start()
+    public GameObject draggedObject;
+    private void Awake()
     {
         if (instance == null)
         {
             instance = this;
         }
 
-        numholder.text = "";
-
         player = (MonoBehaviour)GameObject.FindObjectOfType(typeof(PlayerController));
+    }
+
+    private void Start()
+    {
+
+        SetUpSpellIcons();
+
+        InvokeRepeating("SpawnManaGems", 0f, 5f);
+        UpdateEqNums();
     }
 
     private void Update()
     {
         NumholderStuff();
+        SpellsVisualUpdate();
+
+    }
+
+    void SpawnManaGems()
+    {
+        var manaG = Instantiate(manaGem, new Vector3(Random.Range(player.transform.position.x - 20, player.transform.position.x + 20), 10, Random.Range(player.transform.position.z - 20, player.transform.position.z + 20)), Quaternion.identity);
+
+        var numOnManaG = Random.Range(0, 20);
+
+        manaG.transform.GetChild(0).GetComponent<TMP_Text>().text = numOnManaG.ToString();
+        manaG.transform.GetChild(1).GetComponent<TMP_Text>().text = numOnManaG.ToString();
+
+        manaG.GetComponent<ManaGemScript>().GiveNum(numOnManaG);
+
     }
 
     void NumholderStuff()
@@ -44,9 +78,33 @@ public class GameManager : MonoBehaviour
         CheckWhatNum();
     }
 
+    public void UpdateEqNums()
+    {
+        if (numholder.transform.childCount > 0)
+        {
+            foreach (Transform child in numholder.transform)
+            {
+                Destroy(child.gameObject);
+            }
+        }
+        foreach (var num in numbersEq)
+        {
+            if (draggedObject != null)
+            {
+                if (num == draggedObject.GetComponent<NumberInEqScript>().value)
+                {
+                    draggedObject = null;
+                    continue;
+                }
+            }
+            var gem = Instantiate(manaGemInEqPrefab,numholder.transform);
+
+            gem.GetComponent<NumberInEqScript>().value = num;
+        }
+    }
     void CheckWhatNum()
     {
-        if (Input.GetKeyDown(KeyCode.Backspace))
+        /*if (Input.GetKeyDown(KeyCode.Backspace))
         {
             if (numholder.text.Length > 0)
             {
@@ -96,23 +154,69 @@ public class GameManager : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Minus))
         {
             numholder.text += "-";
+        }*/
+
+
+    }
+
+    void SetUpSpellIcons()
+    {
+        foreach(Transform child in spellsPanel.transform)
+        {
+            child.GetChild(0).gameObject.GetComponent<Image>().enabled = false;
+            child.gameObject.GetComponent<Image>().color = new Color(0.25f, 0.25f, 0.25f, 1f);
         }
+    }
 
+    void SpellsVisualUpdate()
+    {
+        if(chosenSpells.Count > 0)
+        {
+            m = 0;
+            foreach (var spell in chosenSpells)
+            {
+                if(spell != null)
+                {
+                    spellsPanel.transform.GetChild(m).GetChild(0).gameObject.GetComponent<Image>().enabled = true;
+                    spellsPanel.transform.GetChild(m).GetChild(0).gameObject.GetComponent<Image>().sprite = spell.sprite;
 
+                    switch (spell.spellType)
+                    {
+                        case SpellType.Fire:
+                            spellsPanel.transform.GetChild(m).gameObject.GetComponent<Image>().color = new Color(1f, 0f, 0f, 1f);
+                            break;
+
+                        case SpellType.Water:
+                            spellsPanel.transform.GetChild(m).gameObject.GetComponent<Image>().color = new Color(0f, 0.75f, 1f, 1f);
+                            break;
+
+                        case SpellType.Lightning:
+                            spellsPanel.transform.GetChild(m).gameObject.GetComponent<Image>().color = new Color(1f, 1f, 0f, 1f);
+                            break;
+
+                        case SpellType.Earth:
+                            spellsPanel.transform.GetChild(m).gameObject.GetComponent<Image>().color = new Color(0.6f, 0.4f, 0f, 1f);
+                            break;
+                        case SpellType.Healing:
+                            spellsPanel.transform.GetChild(m).gameObject.GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
+                            break;
+                    }
+
+                }
+                else
+                {
+                    spellsPanel.transform.GetChild(m).GetChild(0).gameObject.GetComponent<Image>().enabled = false;
+                }
+                m++;
+            }
+
+        }
     }
 
     public void GameOver()
     {
         Time.timeScale = 0f;
         gameOverPanel.SetActive(true);
-    }
-
-    public void SpecialLeveledSpells(Spells spell)
-    {
-        if (spell.prefab.GetComponent<Projectile>() != null)
-        {
-
-        }
     }
 
 

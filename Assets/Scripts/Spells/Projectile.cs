@@ -9,6 +9,7 @@ public class Projectile : MonoBehaviour
     public Spells spell;
     public float speed;
     public float dmg;
+    int pierceAmount = 0;
 
     Rigidbody rb;
 
@@ -16,6 +17,15 @@ public class Projectile : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         Destroy(gameObject, 5f);
+
+        if (spell.lvl >=3)
+        {
+            pierceAmount = 1;
+        }
+        if (spell.lvl >=5)
+        {
+            pierceAmount = 2;
+        }
     }
     private void Update()
     {
@@ -25,10 +35,15 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Enemy")
+        if (other.gameObject.tag == "Enemy" && pierceAmount<=0)
         {
-            other.gameObject.GetComponent<Enemy>().DealDmg(spell.spellType, spell.LvlChanges(dmg));
+            other.gameObject.GetComponentInParent<Enemy>().DealDmg(spell.spellType, spell.LvlChanges(dmg));
             Destroy(gameObject);
+        }
+        else if(other.gameObject.tag == "Enemy" && pierceAmount > 0)
+        {
+            other.gameObject.GetComponentInParent<Enemy>().DealDmg(spell.spellType, spell.LvlChanges(dmg));
+            pierceAmount--;
         }
     }
 
