@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class Skeleton : Enemy
 {
+    GameObject staff;
     public bool isMage=false;
     bool attacked=false;
     bool isAlreadyWalking=false;
@@ -19,7 +20,7 @@ public class Skeleton : Enemy
 
         player = GameManager.instance.player.gameObject;
 
-        isMage = false;
+        isMage = true;
 
 
         /*if (!isMage)
@@ -45,19 +46,29 @@ public class Skeleton : Enemy
             }
         } */
 
+        if (isMage)
+        {
+            staff = transform.GetChild(3).gameObject;
+        }
+
     }
 
     public override void WalkAnim()
     {
-        if (canMove && !isAlreadyWalking)
+        if (canMove && !isAlreadyWalking && sees)
         {
             animator.Play("SkellyWalk");
             isAlreadyWalking = true;
         }
+
+        if (!sees)
+        {
+            animator.Play("SkellyIdle");
+        }
     }
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "Player" && canCollide && !player.GetComponent<PlayerController>().isDashing && !attacked)
+        if (isInAttackRange && canCollide && !player.GetComponent<PlayerController>().isDashing && !attacked)
         {
             canMove = false;
             attacked = true;
@@ -75,8 +86,7 @@ public class Skeleton : Enemy
 
     void AttackRange()
     {
-        player.GetComponent<PlayerController>().GetHit(dmg);
-        
+        animator.Play("SkellyAttack");      
     }
 
     void AttackMeele()
@@ -98,6 +108,12 @@ public class Skeleton : Enemy
     {
         attacked = false;
         player.GetComponent<PlayerController>().GetHit(dmg);
+        canMove = true;
+    }
+
+    public void EndThrowSpell()
+    {
+        attacked = false;
         canMove = true;
     }
 }

@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
 
     //bools for cooldown on each button
 
-    List<bool> btnsOnCooldown;
+    public List<bool> btnsOnCooldown;
 
     IEnumerable cooldownCoroutine;
 

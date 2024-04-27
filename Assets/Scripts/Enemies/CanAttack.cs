@@ -3,23 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CanAttack : MonoBehaviour
-{ 
+{
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "Player" && canCollide && !player.GetComponent<PlayerController>().isDashing && !attacked)
+        if (other.gameObject.tag == "Player")
         {
-            canMove = false;
-            attacked = true;
-            isAlreadyWalking = false;
-            if (isMage)
-            {
-                AttackRange();
-            }
-            else
-            {
-                AttackMeele();
-            }
+            transform.parent.GetComponent<Enemy>().isInAttackRange = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            transform.parent.GetComponent<Enemy>().isInAttackRange = false;
         }
     }
 }

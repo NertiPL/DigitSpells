@@ -5,26 +5,18 @@ using UnityEngine;
 
 public class SeePlayer : MonoBehaviour
 {
-    public bool isInRange = false;
+    public bool isInRangeOfSeeing = false;
 
     private void Update()
     {
-        transform.parent.GetComponent<Skeleton>().sees = isInRange;
+        transform.parent.GetComponent<Skeleton>().sees = isInRangeOfSeeing;
     }
 
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.tag == "Player" )
         {
-            isInRange = true;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.tag == "Player")
-        {
-            isInRange = false;
+            isInRangeOfSeeing = true;
         }
     }
 }
