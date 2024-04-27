@@ -23,7 +23,7 @@ public enum Class
     Zombie
 }
 
-public class Enemy : MonoBehaviour
+public abstract class Enemy : MonoBehaviour
 {
     public Rigidbody rb;
     public float speed = 2;
@@ -47,6 +47,9 @@ public class Enemy : MonoBehaviour
 
     public float dmg;
 
+    public bool canMove=true;
+    public bool sees = false;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -55,9 +58,10 @@ public class Enemy : MonoBehaviour
     }
     private void Update()
     {
+        WalkAnim();
         CheckDeath();
         targetDirection = player.transform.position - transform.position;
-        if (!(Vector3.Distance(transform.position, player.transform.position) <= 1f))
+        if (!(Vector3.Distance(transform.position, player.transform.position) <= 1f) && canMove)
         {
             var step = speed * Time.deltaTime;
             transform.position = Vector3.MoveTowards(transform.position, player.transform.position, step);
@@ -108,6 +112,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    public abstract void WalkAnim();
 
 
 }

@@ -1,51 +1,67 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor.ShaderGraph.Serialization;
 using UnityEngine;
 
 public class Skeleton : Enemy
 {
-    bool isMage;
-    bool isInRange;
+    public bool isMage=false;
+    bool attacked=false;
+    bool isAlreadyWalking=false;
 
 
-    public GameObject rangeMage;
-    public GameObject rangeMeele;
+    public GameObject MageSkellyPrefab;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
 
         player = GameManager.instance.player.gameObject;
-        /* switch(Random.Range(0, 2))
-         {
-             case 0:
-                 isMage = false;
-                 break;
-             case 1:
-                 isMage = true;
-                 break;
-             default:
-                 isMage = false;
-                 break;
-         }*/
 
         isMage = false;
 
-        if (isMage)
+
+        /*if (!isMage)
         {
-            rangeMage.SetActive(true);
-            rangeMeele.SetActive(false);
-        }
-        else
+            switch (Random.Range(0, 2))
+            {
+                case 0:
+                    isMage = false;
+                    break;
+                case 1:
+                    isMage = true;
+                    break;
+                default:
+                    isMage = false;
+                    break;
+            }
+
+            if (isMage)
+            {
+                var newSkelly=Instantiate(MageSkellyPrefab, transform.position, transform.rotation);
+                newSkelly.GetComponent<Skeleton>().isMage = true;
+                Destroy(gameObject);
+            }
+        } */
+
+    }
+
+    public override void WalkAnim()
+    {
+        if (canMove && !isAlreadyWalking)
         {
-            rangeMage.SetActive(false);
-            rangeMeele.SetActive(true);
+            animator.Play("SkellyWalk");
+            isAlreadyWalking = true;
         }
     }
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "Player" && canCollide && !player.GetComponent<PlayerController>().isDashing)
+        if (other.gameObject.tag == "Player" && canCollide && !player.GetComponent<PlayerController>().isDashing && !attacked)
         {
+            canMove = false;
+            attacked = true;
+            isAlreadyWalking = false;
             if (isMage)
             {
                 AttackRange();
@@ -66,7 +82,22 @@ public class Skeleton : Enemy
     void AttackMeele()
     {
         Debug.Log("attacked");
-        animator.Play("SkellyAttackAnim");
+        switch (Random.Range(0, 2))
+        {
+            case 0:
+                animator.Play("SkellyAttack1");
+                break;
+            default:
+                animator.Play("SkellyAttack2");
+                break;
+        }
+        
+    }
+
+    public void EndAttack()
+    {
+        attacked = false;
         player.GetComponent<PlayerController>().GetHit(dmg);
+        canMove = true;
     }
 }
