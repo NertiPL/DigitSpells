@@ -13,6 +13,7 @@ public class Skeleton : Enemy
 
 
     public GameObject MageSkellyPrefab;
+    public GameObject MageSkellySpell;
 
     private void Start()
     {
@@ -89,6 +90,7 @@ public class Skeleton : Enemy
         animator.Play("SkellyAttack");      
     }
 
+
     void AttackMeele()
     {
         Debug.Log("attacked");
@@ -115,5 +117,10 @@ public class Skeleton : Enemy
     {
         attacked = false;
         canMove = true;
+    }
+
+    public void MidSpellAnim()
+    {
+        Instantiate(MageSkellySpell,staff.transform.GetChild(0).position,transform.rotation);
     }
 }

@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 131bc72f74ec88142aca5a16a6af9a27, type: 3}
-  m_Name: HealingSpell
+  m_Name: Earthquake
   m_EditorClassIdentifier: 
-  cd: 0
-  name: Ludolfina Leczenia
+  cd: 1
+  name: 
   description: 
-  lvl: 1
-  spellType: 4
+  lvl: 0
+  spellType: 2
   difficulty: 0
-  sprite: {fileID: 21300000, guid: 994495cd22348e747b3f01b9db7cb9cc, type: 3}
-  prefab: {fileID: 5644501241689738148, guid: 38f44d3c507dbe24a8404e5909e73cb8, type: 3}
+  sprite: {fileID: 21300000, guid: ef189853341dcdf4fb39656b798b7f79, type: 3}
+  prefab: {fileID: 2265256698673268300, guid: e381f202092775e4ab526f03e8eb5b24, type: 3}
   onTopOnStaff: 0

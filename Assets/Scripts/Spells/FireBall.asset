@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: FireBall
   m_EditorClassIdentifier: 
   cd: 2
-  name: Kula Ognia
-  description: Kula zrobiona z ognia
+  name: Sferyczne Spalanie
+  description: 
   lvl: 1
   spellType: 0
   difficulty: 1
-  sprite: {fileID: 21300000, guid: 4ad9449aa27f6d24cb323b3038449b44, type: 3}
+  sprite: {fileID: 21300000, guid: 045520ddf644a4c4ab69e69d0b701da7, type: 3}
   prefab: {fileID: 7113836899291956607, guid: 8426b089daa3b6147b0a33955e6ca207, type: 3}
   onTopOnStaff: 1

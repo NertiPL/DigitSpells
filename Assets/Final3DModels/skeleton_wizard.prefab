@@ -66,6 +66,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb54eea235cad0f4ab91c70cb04b1a25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &3222101058256799255
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1735455835620451097}
+  m_Layer: 0
+  m_Name: SpellPlaceToSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1735455835620451097
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3222101058256799255}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7710885265742349757}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5940381275706537231
 GameObject:
   m_ObjectHideFlags: 0
@@ -227,6 +258,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 7494508131986145316}
+    - targetCorrespondingSourceObject: {fileID: 9061342175571138709, guid: c1187f5c50faadf46bcb070a215e96c6,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1735455835620451097}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c1187f5c50faadf46bcb070a215e96c6,
         type: 3}
@@ -310,7 +345,9 @@ MonoBehaviour:
   sees: 0
   isInAttackRange: 0
   isMage: 0
-  MageSkellyPrefab: {fileID: 0}
+  MageSkellyPrefab: {fileID: 1874520168764153977}
+  MageSkellySpell: {fileID: 8246397517194479599, guid: d26ea638560968046b14cb19b5d0c578,
+    type: 3}
 --- !u!54 &1285218952297962283
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -365,3 +402,9 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.23405443, y: 0.1511656, z: 0.31552726}
   m_Center: {x: 0.0034389202, y: -0.020908026, z: -0.003987828}
+--- !u!4 &7710885265742349757 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9061342175571138709, guid: c1187f5c50faadf46bcb070a215e96c6,
+    type: 3}
+  m_PrefabInstance: {fileID: 1640097482668186920}
+  m_PrefabAsset: {fileID: 0}

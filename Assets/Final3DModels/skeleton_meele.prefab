@@ -159,17 +159,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 4c403b4bacded7c4eac3e933aaaec8ad,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.27
+      value: 0.46
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4c403b4bacded7c4eac3e933aaaec8ad,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.109354496
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4c403b4bacded7c4eac3e933aaaec8ad,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -4.55
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4c403b4bacded7c4eac3e933aaaec8ad,
         type: 3}
@@ -209,7 +209,12 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 4c403b4bacded7c4eac3e933aaaec8ad,
         type: 3}
       propertyPath: m_Name
-      value: skeleton_meele 1
+      value: skeleton_meele
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 4c403b4bacded7c4eac3e933aaaec8ad,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 4c403b4bacded7c4eac3e933aaaec8ad,
         type: 3}
@@ -293,7 +298,7 @@ BoxCollider:
     m_Bits: 0
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
-  m_ProvidesContacts: 0
+  m_ProvidesContacts: 1
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 0.23405443, y: 0.1511656, z: 0.31552726}
@@ -357,7 +362,10 @@ MonoBehaviour:
   sees: 0
   isInAttackRange: 0
   isMage: 0
-  MageSkellyPrefab: {fileID: 0}
+  MageSkellyPrefab: {fileID: 1874520168764153977, guid: 7893cce2a99618d4b95059cf46d31dc3,
+    type: 3}
+  MageSkellySpell: {fileID: 8246397517194479599, guid: d26ea638560968046b14cb19b5d0c578,
+    type: 3}
 --- !u!54 &1896740785964634825
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -368,7 +376,7 @@ Rigidbody:
   serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}

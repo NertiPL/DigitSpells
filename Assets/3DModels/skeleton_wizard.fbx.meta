@@ -57,6 +57,14 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
+      - time: 0.7279504
+        functionName: MidSpellAnim
+        data: 
+        objectReferenceParameter: {fileID: 7307211772778594793, guid: 7893cce2a99618d4b95059cf46d31dc3,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       - time: 1
         functionName: EndThrowSpell
         data: 

@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    public int howMany;
     public Spells spell;
     public float speed;
     public float dmg;
