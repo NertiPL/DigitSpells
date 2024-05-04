@@ -23,7 +23,7 @@ public enum Class
     Zombie
 }
 
-public class Enemy : MonoBehaviour
+public abstract class Enemy : MonoBehaviour
 {
     public Rigidbody rb;
     public float speed = 2;
@@ -47,6 +47,10 @@ public class Enemy : MonoBehaviour
 
     public float dmg;
 
+    public bool canMove=true;
+    public bool sees = false;
+    public bool isInAttackRange;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -55,18 +59,21 @@ public class Enemy : MonoBehaviour
     }
     private void Update()
     {
+        WalkAnim();
         CheckDeath();
         targetDirection = player.transform.position - transform.position;
-        if (!(Vector3.Distance(transform.position, player.transform.position) <= 1f))
+        if (!(Vector3.Distance(transform.position, player.transform.position) <= 1f) && canMove && sees)
         {
             var step = speed * Time.deltaTime;
             transform.position = Vector3.MoveTowards(transform.position, player.transform.position, step);
         }
 
-        newDirection = Vector3.RotateTowards(transform.forward, targetDirection, speed*Time.deltaTime, 0.0f);
-        Debug.Log("a");
+        if (sees)
+        {
+            newDirection = Vector3.RotateTowards(transform.forward, targetDirection, speed * Time.deltaTime, 0.0f);
 
-        transform.rotation = Quaternion.LookRotation(newDirection);
+            transform.rotation = Quaternion.LookRotation(newDirection);
+        }
     }
 
     public void OnCollisionStay(Collision collision)
@@ -108,6 +115,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    public abstract void WalkAnim();
 
 
 }

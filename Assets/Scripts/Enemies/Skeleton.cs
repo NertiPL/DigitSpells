@@ -1,51 +1,79 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor.ShaderGraph.Serialization;
 using UnityEngine;
 
 public class Skeleton : Enemy
 {
-    bool isMage;
-    bool isInRange;
+    GameObject staff;
+    public bool isMage=false;
+    bool attacked=false;
+    bool isAlreadyWalking=false;
 
 
-    public GameObject rangeMage;
-    public GameObject rangeMeele;
+    public GameObject MageSkellyPrefab;
+    public GameObject MageSkellySpell;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
 
         player = GameManager.instance.player.gameObject;
-        /* switch(Random.Range(0, 2))
-         {
-             case 0:
-                 isMage = false;
-                 break;
-             case 1:
-                 isMage = true;
-                 break;
-             default:
-                 isMage = false;
-                 break;
-         }*/
 
-        isMage = false;
+        isMage = true;
+
+
+        /*if (!isMage)
+        {
+            switch (Random.Range(0, 2))
+            {
+                case 0:
+                    isMage = false;
+                    break;
+                case 1:
+                    isMage = true;
+                    break;
+                default:
+                    isMage = false;
+                    break;
+            }
+
+            if (isMage)
+            {
+                var newSkelly=Instantiate(MageSkellyPrefab, transform.position, transform.rotation);
+                newSkelly.GetComponent<Skeleton>().isMage = true;
+                Destroy(gameObject);
+            }
+        } */
 
         if (isMage)
         {
-            rangeMage.SetActive(true);
-            rangeMeele.SetActive(false);
+            staff = transform.GetChild(3).gameObject;
         }
-        else
+
+    }
+
+    public override void WalkAnim()
+    {
+        if (canMove && !isAlreadyWalking && sees)
         {
-            rangeMage.SetActive(false);
-            rangeMeele.SetActive(true);
+            animator.Play("SkellyWalk");
+            isAlreadyWalking = true;
+        }
+
+        if (!sees)
+        {
+            animator.Play("SkellyIdle");
         }
     }
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "Player" && canCollide && !player.GetComponent<PlayerController>().isDashing)
+        if (isInAttackRange && canCollide && !player.GetComponent<PlayerController>().isDashing && !attacked)
         {
+            canMove = false;
+            attacked = true;
+            isAlreadyWalking = false;
             if (isMage)
             {
                 AttackRange();
@@ -59,14 +87,40 @@ public class Skeleton : Enemy
 
     void AttackRange()
     {
-        player.GetComponent<PlayerController>().GetHit(dmg);
-        
+        animator.Play("SkellyAttack");      
     }
+
 
     void AttackMeele()
     {
         Debug.Log("attacked");
-        animator.Play("SkellyAttackAnim");
+        switch (Random.Range(0, 2))
+        {
+            case 0:
+                animator.Play("SkellyAttack1");
+                break;
+            default:
+                animator.Play("SkellyAttack2");
+                break;
+        }
+        
+    }
+
+    public void EndAttack()
+    {
+        attacked = false;
         player.GetComponent<PlayerController>().GetHit(dmg);
+        canMove = true;
+    }
+
+    public void EndThrowSpell()
+    {
+        attacked = false;
+        canMove = true;
+    }
+
+    public void MidSpellAnim()
+    {
+        Instantiate(MageSkellySpell,staff.transform.GetChild(0).position,transform.rotation);
     }
 }

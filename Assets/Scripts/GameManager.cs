@@ -173,34 +173,47 @@ public class GameManager : MonoBehaviour
         if(chosenSpells.Count > 0)
         {
             m = 0;
+            float a;
             foreach (var spell in chosenSpells)
             {
                 if(spell != null)
                 {
+                    if (player.GetComponent<PlayerController>().btnsOnCooldown[m])
+                    {
+                        a = 0.25f;
+                    }
+                    else
+                    {
+                        a = 1f;
+                    }
+
                     spellsPanel.transform.GetChild(m).GetChild(0).gameObject.GetComponent<Image>().enabled = true;
                     spellsPanel.transform.GetChild(m).GetChild(0).gameObject.GetComponent<Image>().sprite = spell.sprite;
+                    spellsPanel.transform.GetChild(m).GetChild(0).gameObject.GetComponent<Image>().color = new Color(spellsPanel.transform.GetChild(m).GetChild(0).gameObject.GetComponent<Image>().color.r, spellsPanel.transform.GetChild(m).GetChild(0).gameObject.GetComponent<Image>().color.g, spellsPanel.transform.GetChild(m).GetChild(0).gameObject.GetComponent<Image>().color.b, a);
 
                     switch (spell.spellType)
                     {
                         case SpellType.Fire:
-                            spellsPanel.transform.GetChild(m).gameObject.GetComponent<Image>().color = new Color(1f, 0f, 0f, 1f);
+                            spellsPanel.transform.GetChild(m).gameObject.GetComponent<Image>().color = new Color(1f, 0f, 0f, a);
                             break;
 
                         case SpellType.Water:
-                            spellsPanel.transform.GetChild(m).gameObject.GetComponent<Image>().color = new Color(0f, 0.75f, 1f, 1f);
+                            spellsPanel.transform.GetChild(m).gameObject.GetComponent<Image>().color = new Color(0f, 0.75f, 1f, a);
                             break;
 
                         case SpellType.Lightning:
-                            spellsPanel.transform.GetChild(m).gameObject.GetComponent<Image>().color = new Color(1f, 1f, 0f, 1f);
+                            spellsPanel.transform.GetChild(m).gameObject.GetComponent<Image>().color = new Color(1f, 1f, 0f, a);
                             break;
 
                         case SpellType.Earth:
-                            spellsPanel.transform.GetChild(m).gameObject.GetComponent<Image>().color = new Color(0.6f, 0.4f, 0f, 1f);
+                            spellsPanel.transform.GetChild(m).gameObject.GetComponent<Image>().color = new Color(0.6f, 0.4f, 0f, a);
                             break;
                         case SpellType.Healing:
-                            spellsPanel.transform.GetChild(m).gameObject.GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
+                            spellsPanel.transform.GetChild(m).gameObject.GetComponent<Image>().color = new Color(1f, 1f, 1f, a);
                             break;
                     }
+
+                
 
                 }
                 else

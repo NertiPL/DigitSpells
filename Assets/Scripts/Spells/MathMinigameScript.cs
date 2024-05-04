@@ -95,11 +95,19 @@ public class MathMinigameScript : MonoBehaviour
 
     void MoveBackUsedGems()
     {
-        GameManager.instance.UpdateEqNums();
+        foreach (var child in placeHolders)
+        {
+            usedGemsObjects.Add(child.GetComponent<NumDropPlaceHolders>().draggable);
+        }
         foreach (var gemObject in usedGemsObjects)
         {
-            Destroy(gemObject.gameObject);
+            if(gemObject != null)
+            {
+                Destroy(gemObject.gameObject);
+            }
         }
+        GameManager.instance.UpdateEqNums();
+        GameManager.instance.UpdateEqNums();
     }
 
     public void CheckAnwser()
@@ -117,6 +125,8 @@ public class MathMinigameScript : MonoBehaviour
             }
 
         }
+
+        Debug.Log("checked eq: " + equasionCheck.ToString());
 
         StringToFormula stf = new StringToFormula();
         double resultCheck = stf.Eval(equasionCheck);

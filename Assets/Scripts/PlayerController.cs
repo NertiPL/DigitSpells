@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
 
     //bools for cooldown on each button
 
-    List<bool> btnsOnCooldown;
+    public List<bool> btnsOnCooldown;
 
     IEnumerable cooldownCoroutine;
 
@@ -232,7 +232,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            attack = Instantiate(GameManager.instance.chosenSpells[chosenSpellsIndex].prefab, transform.position, new Quaternion(90f, 0f, 0f, 0f), transform);
+            attack = Instantiate(GameManager.instance.chosenSpells[chosenSpellsIndex].prefab, transform.position + transform.forward, transform.rotation);
         }
 
         attack.GetComponent<MonoBehaviour>().enabled = false;
