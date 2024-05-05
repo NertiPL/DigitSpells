@@ -13,18 +13,18 @@ public class ElectricField : MonoBehaviour
 
     private void Start()
     {
-        duration = 2;
+        duration = 4;
         transform.eulerAngles = new Vector3(-90, 0, 0);
         transform.parent= GameManager.instance.player.gameObject.transform;
-        transform.position = Vector3.zero;
+        transform.position = GameManager.instance.player.gameObject.transform.position;
 
         if (spell.lvl >= 3)
         {
-            duration = 4;
+            duration = 6;
         }
         else if(spell.lvl >= 5)
         {
-            duration = 6;
+            duration = 8;
         }
         Invoke("DestroyField", duration);
     }

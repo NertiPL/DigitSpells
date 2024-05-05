@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2923571243584788747}
   - component: {fileID: 2258467141241159109}
   - component: {fileID: 1646244837613781604}
+  - component: {fileID: 3865409965331853123}
   m_Layer: 0
   m_Name: ElectricField
   m_TagString: Untagged
@@ -4847,9 +4848,24 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 13
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3865409965331853123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7562560839987318847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d4528461148860429e2f43bfc31fda3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 2
+  dmg: 5
+  spell: {fileID: 11400000, guid: 68256a2ae7e07b84ba8ca5a9f62c8fcc, type: 2}

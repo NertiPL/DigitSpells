@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: WaterWave
   m_EditorClassIdentifier: 
   cd: 1
-  name: 
+  name: Funkcyjna Fala
   description: 
   lvl: 0
   spellType: 1

@@ -8,6 +8,14 @@ using Unity.VisualScripting;
 
 public class GameManager : MonoBehaviour
 {
+    //remember after saves
+
+    public List<Spells> unlockedSpells;
+    public List<Spells> chosenSpells;
+    public List<float> numbersEq;
+
+    //-----------------------------------------------------------------
+
     public GameObject canvas;
     
     int m = 0;
@@ -16,7 +24,6 @@ public class GameManager : MonoBehaviour
     public GameObject numholder;
     public GameObject manaGemInEqPrefab;
 
-    public List<float> numbersEq;
     public GameObject miniGamePanel;
 
     public Image staminaBar;
@@ -31,9 +38,9 @@ public class GameManager : MonoBehaviour
 
     public GameObject manaGem;
 
-    public List<Spells> chosenSpells;
-
     public GameObject draggedObject;
+
+    public GameObject SpellLvlUpStation;
     private void Awake()
     {
         if (instance == null)
