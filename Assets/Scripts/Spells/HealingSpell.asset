@@ -15,7 +15,7 @@ MonoBehaviour:
   cd: 0
   name: Ludolfina Leczenia
   description: 
-  lvl: 1
+  lvl: 0
   spellType: 4
   difficulty: 0
   sprite: {fileID: 21300000, guid: 994495cd22348e747b3f01b9db7cb9cc, type: 3}

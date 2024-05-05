@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Earthquake
   m_EditorClassIdentifier: 
   cd: 1
-  name: 
+  name: Trygonometryczne Trzesienie
   description: 
   lvl: 0
   spellType: 2

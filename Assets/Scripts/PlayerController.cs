@@ -7,9 +7,12 @@ public class PlayerController : MonoBehaviour
 {
     Rigidbody rb;
 
+    public float maxVelocity;
 
     public float sensitivity = 100f;
     public float speed = 10f;
+
+    public float ogSpeed;
 
     public float stamina = 100f;
     public float staminaCost = 20f;
@@ -45,6 +48,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        ogSpeed = speed;
         rb= GetComponent<Rigidbody>();
 
         maxStaminaBarSize = GameManager.instance.staminaBar.rectTransform.sizeDelta;
@@ -60,11 +64,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void FixedUpdate()
+    {
+        Movement();
+    }
     void Update()
     {
-
-        Movement();
-
         BarUpdater();
 
         CheckDeath();
@@ -92,6 +97,8 @@ public class PlayerController : MonoBehaviour
             rb.velocity += transform.right * 1 * speed * Time.fixedDeltaTime;
         }
 
+        VelocitySuppressor();
+
         if (Input.GetKey(KeyCode.LeftShift) && stamina>=staminaCost&& canDash)
         {
             Dash();          
@@ -102,11 +109,39 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    void VelocitySuppressor()
+    {
+        if (rb.velocity.x > maxVelocity)
+        {
+            rb.velocity = new Vector3(maxVelocity, rb.velocity.y, rb.velocity.z);
+        }
+        if (rb.velocity.y > maxVelocity)
+        {
+            rb.velocity = new Vector3(rb.velocity.x, maxVelocity, rb.velocity.z);
+        }
+        if (rb.velocity.z > maxVelocity)
+        {
+            rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, maxVelocity);
+        }
+        if (rb.velocity.x < -maxVelocity)
+        {
+            rb.velocity = new Vector3(-maxVelocity, rb.velocity.y, rb.velocity.z);
+        }
+        if (rb.velocity.y < -maxVelocity)
+        {
+            rb.velocity = new Vector3(rb.velocity.x, -maxVelocity, rb.velocity.z);
+        }
+        if (rb.velocity.z < -maxVelocity)
+        {
+            rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, -maxVelocity);
+        }
+    }
+
     void Rotation()
     {
         if (Input.GetMouseButton(2))
         {
-            transform.Rotate(new Vector3(0, Input.GetAxis("Mouse X"), 0) * Time.fixedDeltaTime *sensitivity);
+            transform.Rotate(new Vector3(0, Input.GetAxis("Mouse X") * Time.deltaTime * sensitivity *2, 0));
 
 
             vCam.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset += new Vector3(0, 0, -1*Input.GetAxis("Mouse Y") * Time.deltaTime * sensitivity);
