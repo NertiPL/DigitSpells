@@ -9,7 +9,7 @@ public class SeePlayer : MonoBehaviour
 
     private void Update()
     {
-        transform.parent.GetComponent<Skeleton>().sees = isInRangeOfSeeing;
+        transform.parent.GetComponent<Enemy>().sees = isInRangeOfSeeing;
     }
 
     private void OnTriggerStay(Collider other)

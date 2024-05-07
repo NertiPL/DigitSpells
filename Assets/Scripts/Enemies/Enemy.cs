@@ -51,6 +51,8 @@ public abstract class Enemy : MonoBehaviour
     public bool sees = false;
     public bool isInAttackRange;
 
+    public bool useMeleeAnim=false;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -59,6 +61,10 @@ public abstract class Enemy : MonoBehaviour
     }
     private void Update()
     {
+        if (useMeleeAnim)
+        {
+            CollideAnim();
+        }
         WalkAnim();
         CheckDeath();
         targetDirection = player.transform.position - transform.position;
@@ -80,7 +86,7 @@ public abstract class Enemy : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player" && canCollide && !player.GetComponent<PlayerController>().isDashing)
         {
-            player.GetComponent<PlayerController>().GetHit(dmgOnCol);
+            useMeleeAnim = true;
             canCollide = false;
             Invoke("CanCollideAgain", 2f);
         }
@@ -116,6 +122,8 @@ public abstract class Enemy : MonoBehaviour
     }
 
     public abstract void WalkAnim();
+    public abstract void CollideAnim();
+
 
 
 }

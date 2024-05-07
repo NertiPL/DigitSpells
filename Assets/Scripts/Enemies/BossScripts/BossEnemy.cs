@@ -14,4 +14,9 @@ public class BossEnemy : Enemy
     {
 
     }
+
+    public override void CollideAnim()
+    {
+
+    }
 }

@@ -92,7 +92,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8907ff6575de61a4f94410c0466aba6b, type: 2}
   - {fileID: 11400000, guid: 68256a2ae7e07b84ba8ca5a9f62c8fcc, type: 2}
   - {fileID: 11400000, guid: c5a3b9549c3931c41bf971669b912bd2, type: 2}
-  - {fileID: 11400000, guid: c5a3b9549c3931c41bf971669b912bd2, type: 2}
+  - {fileID: 11400000, guid: c64bffb8a96d5c04b9d3f23b31f40655, type: 2}
   - {fileID: 11400000, guid: c5a3b9549c3931c41bf971669b912bd2, type: 2}
   - {fileID: 11400000, guid: c5a3b9549c3931c41bf971669b912bd2, type: 2}
   cardPrefab: {fileID: 7180185435008335381, guid: 0335a27e9bf06aa4f81b178b2204515c,

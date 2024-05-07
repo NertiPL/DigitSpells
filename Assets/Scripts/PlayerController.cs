@@ -75,6 +75,8 @@ public class PlayerController : MonoBehaviour
         CheckDeath();
 
         CorrectHp();
+
+        Rotation();
     }
 
     void Movement()
@@ -104,7 +106,6 @@ public class PlayerController : MonoBehaviour
             Dash();          
         }
 
-        Rotation();
         Attack();
 
     }

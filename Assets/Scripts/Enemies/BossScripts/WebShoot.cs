@@ -5,10 +5,13 @@ using UnityEngine;
 public class WebShoot : MonoBehaviour
 {
     public float step;
+    public float dmg;
 
     Animator animator;
 
     Vector3 startingPlayerPos;
+
+    bool dmgOnce = false;
 
     int i = 0;
     private void Start()
@@ -53,6 +56,12 @@ public class WebShoot : MonoBehaviour
             GameManager.instance.player.GetComponent<PlayerController>().speed = GameManager.instance.player.GetComponent<PlayerController>().speed / 2;
             Invoke("GetSpeedBack", 4f);
             transform.GetChild(0).gameObject.SetActive(false);
+
+            if(!dmgOnce)
+            {
+                dmgOnce = true;
+                GameManager.instance.player.GetComponent<PlayerController>().GetHit(dmg);
+            }
         }
     }
 
@@ -69,6 +78,6 @@ public class WebShoot : MonoBehaviour
     }
     void SelfDestroy()
     {
-        Destroy(transform.parent.gameObject);
+        Destroy(gameObject);
     }
 }

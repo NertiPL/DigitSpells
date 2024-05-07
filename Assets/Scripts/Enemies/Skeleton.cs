@@ -106,6 +106,11 @@ public class Skeleton : Enemy
         
     }
 
+    public override void CollideAnim()
+    {
+
+    }
+
     public void EndAttack()
     {
         attacked = false;

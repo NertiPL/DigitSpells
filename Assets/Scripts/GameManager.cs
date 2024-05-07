@@ -41,6 +41,10 @@ public class GameManager : MonoBehaviour
     public GameObject draggedObject;
 
     public GameObject SpellLvlUpStation;
+
+    public GameObject SettingsPanel;
+    public AudioSource music;
+    public AudioSource SFX;
     private void Awake()
     {
         if (instance == null)
@@ -64,6 +68,7 @@ public class GameManager : MonoBehaviour
     {
         NumholderStuff();
         SpellsVisualUpdate();
+        OpenSettingsPanel();
 
     }
 
@@ -239,5 +244,14 @@ public class GameManager : MonoBehaviour
         gameOverPanel.SetActive(true);
     }
 
+    void OpenSettingsPanel()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SettingsPanel.SetActive(true);
+            SettingsPanel.GetComponent<InGameSettings>().Open();
+        }
+
+    }
 
 }
