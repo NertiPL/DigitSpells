@@ -14,6 +14,7 @@ public class Projectile : MonoBehaviour
 
     private void Start()
     {
+        dmg = spell.LvlChanges(dmg);
         rb = GetComponent<Rigidbody>();
         Destroy(gameObject, 5f);
 

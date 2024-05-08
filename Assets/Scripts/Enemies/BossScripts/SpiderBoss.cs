@@ -14,13 +14,15 @@ public class SpiderBoss : MonoBehaviour
     float hp;
     float hpMax;
 
+    bool isAttacking;
+
     private void Start()
     {
         hpMax = gameObject.GetComponent<BossEnemy>().hp;
         SetOffAttacks();
     }
 
-    void SetOffAttacks()
+    public void SetOffAttacks()
     {
         if (!isPhase2)
         {
@@ -28,7 +30,7 @@ public class SpiderBoss : MonoBehaviour
         }
         else
         {
-            InvokeRepeating("ChooseAttack", 0f, 1.5f);
+            ChooseAttack();
         }
     }
 
@@ -41,25 +43,82 @@ public class SpiderBoss : MonoBehaviour
 
         if (hp <= hpMax / 2 && !isPhase2)
         {
-            isPhase2=true;
+            isAttacking = false;
+            isPhase2 =true;
             CancelInvoke("ChooseAttack");
-            SetOffAttacks();
+            animator.Play("ChangeState");
         }
     }
 
     public void ChooseAttack()
     {
-        int randomAttack =Random.Range(0, 4);
-        /* 0 - Magic Balls Around Him
-        * 1 - Area Damage
-        * 2 - Run Leaving Cobweb
-        * 3 - Shoot Cobweb 
-        */ 
-        StartAttack(randomAttack);
+        if (!isAttacking)
+        {
+            int randomAttack = Random.Range(0, 4);
+            /* 0 - Magic Balls Around Him
+            * 1 - Area Damage
+            * 2 - Run Leaving Cobweb
+            * 3 - Shoot Cobweb 
+            */
+            StartAttack(randomAttack);
+        }
     }
 
     void StartAttack(int id)
     {
-        Instantiate(Attacks1stPhasePrefabs[id],transform.position, Quaternion.identity,transform); 
+        Instantiate(Attacks1stPhasePrefabs[id],transform.position, Quaternion.identity,transform);
+        if (!isPhase2)
+        {
+            isAttacking = true;
+            switch (id)
+            {
+                case 0:
+                    animator.Play("Dance");
+                    break;
+
+                case 1:
+                    animator.Play("Attack1");
+                    break;
+
+                case 2:
+                    animator.Play("Walk");
+                    //to swap
+                    break;
+
+                default:
+                    animator.Play("Attack2");
+                    break;
+
+            }
+        }
+        else
+        {
+            switch (id)
+            {
+                case 0:
+                    animator.Play("DanceState");
+                    //to swap
+                    break;
+
+                case 1:
+                    animator.Play("Attack1State");
+                    break;
+
+                case 2:
+                    animator.Play("WalkState");
+                    //to swap
+                    break;
+
+                default:
+                    animator.Play("Attack2State");
+                    break;
+
+            }
+        }
+
+    }
+    public void EndAnim()
+    {
+        isAttacking=false;
     }
 }

@@ -16,6 +16,9 @@ public class SpellCardPanel : MonoBehaviour
 
     public GameObject cardPrefab;
 
+    public TMP_Text expText;
+    public TMP_Text expCost;
+
     GameObject showStatsPanel;
     /* 0-Name
      * 1-Description
@@ -49,6 +52,7 @@ public class SpellCardPanel : MonoBehaviour
     }
     private void Update()
     {
+        expText.text = "Exp: " + GameManager.instance.exp;
         transform.position = new Vector3(transform.position.x, center + (difference * slider.value), transform.position.z);
     }
 
@@ -61,6 +65,14 @@ public class SpellCardPanel : MonoBehaviour
             if(card.GetComponent<SpellCard>().id == id)
             {
                 cardSpellComp = spellsInGame[id];
+                if (cardSpellComp.lvl < 5)
+                {
+                    expCost.text = "Costs: " + (cardSpellComp.lvl + 1) * 10 + "exp";
+                }
+                else
+                {
+                    expCost.text = "";
+                }
                 showStatsPanel.SetActive(true);
                 showStatsPanel.transform.GetChild(0).GetComponent<TMP_Text>().text = cardSpellComp.name;
                 showStatsPanel.transform.GetChild(1).GetComponent<TMP_Text>().text = cardSpellComp.description;
@@ -96,8 +108,9 @@ public class SpellCardPanel : MonoBehaviour
 
     public void LvlUp()
     {
-        if(cardSpellComp != null)
+        if(cardSpellComp != null && GameManager.instance.exp>=(cardSpellComp.lvl+1)*10)
         {
+            GameManager.instance.exp -= (cardSpellComp.lvl + 1) * 10;
             cardSpellComp.lvl++;
             GoBack();
         }
@@ -109,5 +122,19 @@ public class SpellCardPanel : MonoBehaviour
         GameManager.instance.canvas.transform.GetChild(0).gameObject.SetActive(true);
         GameManager.instance.miniGamePanel.SetActive(true);
         Time.timeScale = 1f;
+    }
+
+    public void ApplySpell(int id)
+    {
+        if (GameManager.instance.chosenSpells.Contains(cardSpellComp))
+        {
+            GameManager.instance.chosenSpells[GameManager.instance.chosenSpells.IndexOf(cardSpellComp)] = null;
+            GameManager.instance.chosenSpells[id] = cardSpellComp;
+        }
+        else
+        {
+            GameManager.instance.chosenSpells[id] = cardSpellComp;
+        }
+        GoBack();
     }
 }

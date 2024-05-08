@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -45,6 +46,13 @@ public class GameManager : MonoBehaviour
     public GameObject SettingsPanel;
     public AudioSource music;
     public AudioSource SFX;
+
+    public float sensitivityY;
+    public float sensitivityX;
+
+    public Terrain terrain;
+
+    public float exp=0;
     private void Awake()
     {
         if (instance == null)
@@ -57,7 +65,13 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-
+        sensitivityX = 400;
+        sensitivityY = 400;
+        chosenSpells=new List<Spells>();
+        for (int i = 0; i < 5; i++)
+        {
+            chosenSpells.Add(null);
+        }
         SetUpSpellIcons();
 
         InvokeRepeating("SpawnManaGems", 0f, 5f);
@@ -66,7 +80,6 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        NumholderStuff();
         SpellsVisualUpdate();
         OpenSettingsPanel();
 
@@ -85,10 +98,6 @@ public class GameManager : MonoBehaviour
 
     }
 
-    void NumholderStuff()
-    {
-        CheckWhatNum();
-    }
 
     public void UpdateEqNums()
     {
@@ -114,62 +123,7 @@ public class GameManager : MonoBehaviour
             gem.GetComponent<NumberInEqScript>().value = num;
         }
     }
-    void CheckWhatNum()
-    {
-        /*if (Input.GetKeyDown(KeyCode.Backspace))
-        {
-            if (numholder.text.Length > 0)
-            {
-                numholder.text = numholder.text.Remove(numholder.text.Length - 1, 1);
-            }
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha0) || Input.GetKeyDown("[0]"))
-        {
-            numholder.text += "0";
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown("[1]"))
-        {
-            numholder.text += "1";
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown("[2]"))
-        {
-            numholder.text += "2";
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown("[3]"))
-        {
-            numholder.text += "3";
-        }
-        else if(Input.GetKeyDown(KeyCode.Alpha4) || Input.GetKeyDown("[4]"))
-        {
-            numholder.text += "4";
-        }
-        else if(Input.GetKeyDown(KeyCode.Alpha5) || Input.GetKeyDown("[5]"))
-        {
-            numholder.text += "5";
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha6) || Input.GetKeyDown("[6]"))
-        {
-            numholder.text += "6";
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha7) || Input.GetKeyDown("[7]"))
-        {
-            numholder.text += "7";
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha8) || Input.GetKeyDown("[8]"))
-        {
-            numholder.text += "8";
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha9) || Input.GetKeyDown("[9]"))
-        {
-            numholder.text += "9";
-        }
-        else if (Input.GetKeyDown(KeyCode.Minus))
-        {
-            numholder.text += "-";
-        }*/
-
-
-    }
+    
 
     void SetUpSpellIcons()
     {
@@ -231,6 +185,7 @@ public class GameManager : MonoBehaviour
                 else
                 {
                     spellsPanel.transform.GetChild(m).GetChild(0).gameObject.GetComponent<Image>().enabled = false;
+                    spellsPanel.transform.GetChild(m).gameObject.GetComponent<Image>().color = new Color(0.25f, 0.25f, 0.25f, 1f);
                 }
                 m++;
             }
@@ -252,6 +207,16 @@ public class GameManager : MonoBehaviour
             SettingsPanel.GetComponent<InGameSettings>().Open();
         }
 
+    }
+
+    public void GameOverMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public void GameOverResetLvl()
+    {
+        SceneManager.LoadScene("Level1");
     }
 
 }

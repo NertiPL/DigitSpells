@@ -1,66 +1,49 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Text;
-using System;
-using System.Globalization;
 using System.Linq;
-using Unity.VisualScripting;
 
 public class MathMinigameScript : MonoBehaviour
 {
     int chosenSpellsIndexHolder;
     public GameObject enterAnwserPanel;
-
     public Animator animator;
-
     public int howManyEmpty;
     public List<float> tempNumbersEq;
 
-    string equasion = "";
-    string equasionShow = "";
-    string equasionCheck = "";
+    StringBuilder equasion = new StringBuilder();
+    StringBuilder equasionShow = new StringBuilder();
+    StringBuilder equasionCheck = new StringBuilder();
     int character;
-    //0 -> -
-    //1 -> +
-    //2 -> *
-    //3 -> /
-
     bool checkNextNum = false;
     float numBefore;
     List<int> numBeforeDividers;
     bool hasDiv = false;
-
     double result;
-
     bool isCorrect;
-
     List<GameObject> placeHolders;
-
     List<float> usedNums;
     List<DragableObject> usedGemsObjects;
 
-    /*if (op =="/" && (rhs%lhs!=0 || lhs==1 || lhs==2|| lhs==4||lhs==5))
-                {
-                    return false;
-                }*/
     private void Start()
     {
         placeHolders = new List<GameObject>();
 
-        foreach(Transform child in enterAnwserPanel.transform)
+        foreach (Transform child in enterAnwserPanel.transform)
         {
             placeHolders.Add(child.gameObject);
         }
 
     }
+
     public void SlideUp(int chosenSpellsIndex, Difficulty dif)
     {
         chosenSpellsIndexHolder = chosenSpellsIndex;
-        usedNums =new List<float>();
-        usedGemsObjects=new List<DragableObject>();
+        usedNums = new List<float>();
+        usedGemsObjects = new List<DragableObject>();
         animator.Play("MathPanelSlideAnim");
         MakeEquastion(dif);
     }
@@ -76,17 +59,17 @@ public class MathMinigameScript : MonoBehaviour
         }
         else
         {
-            GameManager.instance.player.GetComponent<PlayerController>().canUseAbility=true;
+            GameManager.instance.player.GetComponent<PlayerController>().canUseAbility = true;
         }
     }
 
     void RemoveUsedGems()
     {
-        foreach(var gem in usedNums)
+        foreach (var gem in usedNums)
         {
             GameManager.instance.numbersEq.Remove(gem);
         }
-        foreach(var gemObject in usedGemsObjects)
+        foreach (var gemObject in usedGemsObjects)
         {
             Destroy(gemObject.gameObject);
         }
@@ -101,7 +84,7 @@ public class MathMinigameScript : MonoBehaviour
         }
         foreach (var gemObject in usedGemsObjects)
         {
-            if(gemObject != null)
+            if (gemObject != null)
             {
                 Destroy(gemObject.gameObject);
             }
@@ -112,14 +95,14 @@ public class MathMinigameScript : MonoBehaviour
 
     public void CheckAnwser()
     {
-        for (int i = placeHolders.Count-1; i >= 0; i--)
+        for (int i = placeHolders.Count - 1; i >= 0; i--)
         {
             var child = placeHolders[i];
 
             if (child.GetComponent<NumDropPlaceHolders>().valueOfGem != 21)
             {
-                equasionCheck=equasionCheck.Remove(2 * (child.GetComponent<NumDropPlaceHolders>().placeHolderId - 1), 1);
-                equasionCheck=equasionCheck.Insert(2 * (child.GetComponent<NumDropPlaceHolders>().placeHolderId - 1), child.GetComponent<NumDropPlaceHolders>().valueOfGem.ToString());
+                equasionCheck = equasionCheck.Remove(2 * (child.GetComponent<NumDropPlaceHolders>().placeHolderId - 1), 1);
+                equasionCheck = equasionCheck.Insert(2 * (child.GetComponent<NumDropPlaceHolders>().placeHolderId - 1), child.GetComponent<NumDropPlaceHolders>().valueOfGem.ToString());
                 usedNums.Add(child.GetComponent<NumDropPlaceHolders>().valueOfGem);
                 usedGemsObjects.Add(child.GetComponent<NumDropPlaceHolders>().draggable);
             }
@@ -129,7 +112,7 @@ public class MathMinigameScript : MonoBehaviour
         Debug.Log("checked eq: " + equasionCheck.ToString());
 
         StringToFormula stf = new StringToFormula();
-        double resultCheck = stf.Eval(equasionCheck);
+        double resultCheck = stf.Eval(equasionCheck.ToString());
 
         if (resultCheck == result)
         {
@@ -137,21 +120,19 @@ public class MathMinigameScript : MonoBehaviour
         }
         else
         {
-            isCorrect=false;
+            isCorrect = false;
         }
 
-         
         SlideOff();
-
 
         Debug.Log(isCorrect);
     }
 
     public void MakeEquastion(Difficulty dif)
     {
-        equasion = "";
-        equasionShow = "";
-        equasionCheck = "";
+        equasion.Clear();
+        equasionShow.Clear();
+        equasionCheck.Clear();
         tempNumbersEq = new List<float>();
 
         switch (dif)
@@ -173,12 +154,12 @@ public class MathMinigameScript : MonoBehaviour
                 break;
         }
 
-        foreach(var placeHolder in placeHolders)
+        foreach (var placeHolder in placeHolders)
         {
-            placeHolder.active = false;
-            if (placeHolders.FindInstanceID(placeHolder) <howManyEmpty)
+            placeHolder.SetActive(false);
+            if (placeHolders.FindIndex(item => item == placeHolder) < howManyEmpty)
             {
-                placeHolder.active = true;
+                placeHolder.SetActive(true);
             }
         }
 
@@ -188,7 +169,6 @@ public class MathMinigameScript : MonoBehaviour
         }
         else
         {
-
             foreach (var number in GameManager.instance.numbersEq)
             {
                 tempNumbersEq.Add(number);
@@ -196,7 +176,7 @@ public class MathMinigameScript : MonoBehaviour
 
             for (int i = 0; i < howManyEmpty; i++)
             {
-                changeAddedNum:;
+            changeAddedNum:;
                 var randomNum = UnityEngine.Random.Range(0, tempNumbersEq.Count - 1);
                 float addedNumber = tempNumbersEq[randomNum];
 
@@ -213,9 +193,9 @@ public class MathMinigameScript : MonoBehaviour
                         }
                     }
 
-                    if (hasDiv || tempNumbersEq.Contains(1)|| tempNumbersEq.Contains(2) || tempNumbersEq.Contains(4)|| tempNumbersEq.Contains(5))
+                    if (hasDiv || tempNumbersEq.Contains(1) || tempNumbersEq.Contains(2) || tempNumbersEq.Contains(4) || tempNumbersEq.Contains(5))
                     {
-                        if (addedNumber != 0 &&(addedNumber == 1 || addedNumber == 2 || addedNumber == 4 || addedNumber == 5 || numBefore % addedNumber == 0))
+                        if (addedNumber != 0 && (addedNumber == 1 || addedNumber == 2 || addedNumber == 4 || addedNumber == 5 || numBefore % addedNumber == 0))
                         {
                             checkNextNum = false;
                         }
@@ -231,47 +211,30 @@ public class MathMinigameScript : MonoBehaviour
                         switch (character)
                         {
                             case 0:
-                                equasion = equasion.Remove(equasion.Length - 2, 2);
-                                equasion += "- ";
-
-                                equasionShow = equasionShow.Remove(equasionShow.Length - 2, 2);
-                                equasionShow += "- ";
-
-                                equasionCheck = equasionCheck.Remove(equasionCheck.Length - 1, 1);
-                                equasionCheck += "-";
-
+                                equasion.Remove(equasion.Length - 2, 2).Append("- ");
+                                equasionShow.Remove(equasionShow.Length - 2, 2).Append("- ");
+                                equasionCheck.Remove(equasionCheck.Length - 1, 1).Append("-");
                                 break;
 
                             case 1:
-                                equasion = equasion.Remove(equasion.Length - 2, 2);
-                                equasion += "+ ";
-
-                                equasionShow = equasionShow.Remove(equasionShow.Length - 2, 2);
-                                equasionShow += "+ ";
-
-                                equasionCheck = equasionCheck.Remove(equasionCheck.Length - 1, 1);
-                                equasionCheck += "+";
+                                equasion.Remove(equasion.Length - 2, 2).Append("+ ");
+                                equasionShow.Remove(equasionShow.Length - 2, 2).Append("+ ");
+                                equasionCheck.Remove(equasionCheck.Length - 1, 1).Append("+");
                                 break;
 
                             case 2:
-                                equasion = equasion.Remove(equasion.Length - 2, 2);
-                                equasion += "* ";
-
-                                equasionShow = equasionShow.Remove(equasionShow.Length - 2, 2);
-                                equasionShow += "* ";
-
-                                equasionCheck = equasionCheck.Remove(equasionCheck.Length - 1, 1);
-                                equasionCheck += "*";
+                                equasion.Remove(equasion.Length - 2, 2).Append("* ");
+                                equasionShow.Remove(equasionShow.Length - 2, 2).Append("* ");
+                                equasionCheck.Remove(equasionCheck.Length - 1, 1).Append("*");
                                 break;
                         }
                     }
                 }
-                
 
-                equasion += addedNumber + " ";
-                equasionShow += "\u25A1 " ;
+                equasion.Append(addedNumber).Append(" ");
+                equasionShow.Append("\u25A1 ");
 
-                equasionCheck += " ";
+                equasionCheck.Append(" ");
 
                 tempNumbersEq.RemoveAt(randomNum);
 
@@ -282,29 +245,29 @@ public class MathMinigameScript : MonoBehaviour
                     switch (character)
                     {
                         case 0:
-                            equasion += "- ";
-                            equasionShow += "- ";
-                            equasionCheck += "-";
+                            equasion.Append("- ");
+                            equasionShow.Append("- ");
+                            equasionCheck.Append("-");
                             break;
 
                         case 1:
-                            equasion += "+ ";
-                            equasionShow += "+ ";
-                            equasionCheck += "+";
+                            equasion.Append("+ ");
+                            equasionShow.Append("+ ");
+                            equasionCheck.Append("+");
                             break;
 
                         case 2:
-                            equasion += "* ";
-                            equasionShow += "* ";
-                            equasionCheck += "*";
+                            equasion.Append("* ");
+                            equasionShow.Append("* ");
+                            equasionCheck.Append("*");
                             break;
 
                         case 3:
-                            equasion += "/ ";
-                            equasionShow += "/ ";
-                            equasionCheck += "/";
+                            equasion.Append("/ ");
+                            equasionShow.Append("/ ");
+                            equasionCheck.Append("/");
                             numBefore = addedNumber;
-                            numBeforeDividers=GetDivisors((int)addedNumber).ToList();
+                            numBeforeDividers = GetDivisors((int)addedNumber).ToList();
                             hasDiv = false;
                             checkNextNum = true;
                             break;
@@ -313,30 +276,22 @@ public class MathMinigameScript : MonoBehaviour
 
             }
 
-            
             StringToFormula stf = new StringToFormula();
-            result = stf.Eval(equasion);
+            result = stf.Eval(equasion.ToString());
 
-            equasion += "= ";
-            equasion += result;
+            equasion.Append("= ").Append(result);
+            equasionShow.Append("= ").Append(result);
 
-            Debug.Log(equasion + "lol");
-
-            equasionShow += "= ";
-            equasionShow += result;
-
-            if((dif==Difficulty.Easy && result > 200) || (dif == Difficulty.Medium && result > 500) || (dif == Difficulty.Hard && result > 1000))
+            if ((dif == Difficulty.Easy && result > 200) || (dif == Difficulty.Medium && result > 500) || (dif == Difficulty.Hard && result > 1000))
             {
                 MakeEquastion(dif);
                 goto end;
             }
 
-            //equasionWhichNumWhere = equasionWhichNumWhere.Replace(' ', (char)160);
-            transform.GetChild(0).GetComponent<TMP_Text>().text = equasionShow;
-
+            transform.GetChild(0).GetComponent<TMP_Text>().text = equasionShow.ToString();
         }
 
-        end:;
+    end:;
     }
 
     private static IEnumerable<int> GetDivisors(int n)
@@ -393,7 +348,7 @@ public class MathMinigameScript : MonoBehaviour
             if (string.IsNullOrEmpty(expression))
                 return 0.0;
 
-            if (double.TryParse(expression, NumberStyles.Any, CultureInfo.InvariantCulture, out double value))
+            if (double.TryParse(expression, out double value))
                 return value;
 
             List<string> tokens = GetTokens(expression);
@@ -424,7 +379,7 @@ public class MathMinigameScript : MonoBehaviour
                         {
                             if (!IsOperator(nextToken) && operatorStack.Count == operandStack.Count)
                             {
-                                operandStack.Push(double.Parse($"{token}{nextToken}", CultureInfo.InvariantCulture));
+                                operandStack.Push(double.Parse($"{token}{nextToken}"));
                                 tokenIndex += 2;
                                 continue;
                             }
@@ -445,7 +400,7 @@ public class MathMinigameScript : MonoBehaviour
                 }
                 else
                 {
-                    operandStack.Push(double.Parse(token, CultureInfo.InvariantCulture));
+                    operandStack.Push(double.Parse(token));
                 }
                 tokenIndex += 1;
             }

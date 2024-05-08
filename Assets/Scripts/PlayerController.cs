@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    Rigidbody rb;
+    public Rigidbody rb;
 
     public float maxVelocity;
 
-    public float sensitivity = 100f;
+    //public float sensitivity = 100f;
     public float speed = 10f;
 
     public float ogSpeed;
@@ -142,11 +142,11 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetMouseButton(2))
         {
-            transform.Rotate(new Vector3(0, Input.GetAxis("Mouse X") * Time.deltaTime * sensitivity *2, 0));
+            transform.Rotate(new Vector3(0, Input.GetAxis("Mouse X") * Time.deltaTime * GameManager.instance.sensitivityX *2, 0));
 
 
-            vCam.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset += new Vector3(0, 0, -1*Input.GetAxis("Mouse Y") * Time.deltaTime * sensitivity);
-            vCam.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset += new Vector3(0,  -1*Input.GetAxis("Mouse Y") * Time.deltaTime * sensitivity,0);
+            vCam.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset += new Vector3(0, 0, -1*Input.GetAxis("Mouse Y") * Time.deltaTime * GameManager.instance.sensitivityY);
+            vCam.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset += new Vector3(0,  -1*Input.GetAxis("Mouse Y") * Time.deltaTime * GameManager.instance.sensitivityY, 0);
 
             if (vCam.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset.z > -0.1 ){
                 vCam.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset = new Vector3(vCam.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset.x, vCam.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset.y, -0.1f);
@@ -156,9 +156,9 @@ public class PlayerController : MonoBehaviour
                 vCam.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset = new Vector3(vCam.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset.x, vCam.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset.y, -5f);
             }
 
-            if (vCam.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset.y > 3.9)
+            if (vCam.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset.y > 7f)
             {
-                vCam.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset = new Vector3(vCam.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset.x,3.9f, vCam.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset.z);
+                vCam.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset = new Vector3(vCam.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset.x,7f, vCam.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset.z);
             }
             else if(vCam.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset.y < 1.8f)
             {
@@ -229,14 +229,29 @@ public class PlayerController : MonoBehaviour
     {
         if(canUseAbility)
         {
-            if (Input.GetKeyDown(KeyCode.Q) && !btnsOnCooldown[0])
+            if (Input.GetKeyDown(KeyCode.Q) && !btnsOnCooldown[0] && GameManager.instance.chosenSpells[0] != null)
             {
                 AttackFormula(0);
             }
 
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.E) && !btnsOnCooldown[1] && GameManager.instance.chosenSpells[1] != null)
             {
                 AttackFormula(1);
+
+            }
+            if (Input.GetKeyDown(KeyCode.R) && !btnsOnCooldown[2] && GameManager.instance.chosenSpells[2] != null)
+            {
+                AttackFormula(2);
+
+            }
+            if (Input.GetKeyDown(KeyCode.F) && !btnsOnCooldown[3] && GameManager.instance.chosenSpells[3] != null)
+            {
+                AttackFormula(3);
+
+            }
+            if (Input.GetKeyDown(KeyCode.C) && !btnsOnCooldown[4] && GameManager.instance.chosenSpells[4]!=null)
+            {
+                AttackFormula(4);
 
             }
 

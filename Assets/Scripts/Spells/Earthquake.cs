@@ -18,6 +18,7 @@ public class Earthquake : MonoBehaviour
 
     private void Start()
     {
+        dmg = spell.LvlChanges(dmg);
         transform.eulerAngles = new Vector3(-90,0,0);
         virtualCam = GameManager.instance.player.transform.parent.GetChild(0).GetComponent<CinemachineVirtualCamera>();
         perlinNoise = virtualCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();

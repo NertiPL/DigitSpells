@@ -13,6 +13,7 @@ public class ElectricField : MonoBehaviour
 
     private void Start()
     {
+        dmg = spell.LvlChanges(dmg);
         duration = 4;
         transform.eulerAngles = new Vector3(-90, 0, 0);
         transform.parent= GameManager.instance.player.gameObject.transform;

@@ -10,6 +10,10 @@ public class ThunderStrike : MonoBehaviour
 
     bool dealtDmg=false;
 
+    private void Start()
+    {
+        dmg = spell.LvlChanges(dmg);
+    }
 
     public void EndAnim()
     {

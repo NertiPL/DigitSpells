@@ -19,5 +19,5 @@ MonoBehaviour:
   spellType: 4
   difficulty: 0
   sprite: {fileID: 21300000, guid: 994495cd22348e747b3f01b9db7cb9cc, type: 3}
-  prefab: {fileID: 5644501241689738148, guid: 38f44d3c507dbe24a8404e5909e73cb8, type: 3}
+  prefab: {fileID: 5272053530078301282, guid: 20cf61f161d8ca04fa5837c08aae0e4a, type: 3}
   onTopOnStaff: 0

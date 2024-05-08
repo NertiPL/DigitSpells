@@ -344,6 +344,8 @@ MonoBehaviour:
   canMove: 1
   sees: 0
   isInAttackRange: 0
+  useMeleeAnim: 0
+  canDmgOnCol: 1
   isMage: 0
   MageSkellyPrefab: {fileID: 1874520168764153977}
   MageSkellySpell: {fileID: 8246397517194479599, guid: d26ea638560968046b14cb19b5d0c578,

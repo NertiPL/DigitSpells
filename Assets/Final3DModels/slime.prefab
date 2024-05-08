@@ -130,7 +130,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b5f4db2c03201894daaec64ec76f7360,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 45187910352388187}
+      addedObject: {fileID: 6970634559563017858}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b5f4db2c03201894daaec64ec76f7360,
         type: 3}
       insertIndex: -1
@@ -146,7 +146,7 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2624516165090366454}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &45187910352388187
+--- !u!114 &6970634559563017858
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -155,7 +155,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2931085081402830503}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3366adb1842e82e4b920a0cf74eed0f9, type: 3}
+  m_Script: {fileID: 11500000, guid: 8f7d0778d12c50248b2eba177e42de14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 0}
@@ -163,11 +163,22 @@ MonoBehaviour:
   name: 
   description: 
   lvl: 0
-  hp: 20
+  hp: 10
   enemyClass: 10
-  dmgOnCol: 10
+  dmgOnCol: 0
   weakSpellType: 
-  strongSpellType: 00000000
+  strongSpellType: 
+  targetDirection: {x: 0, y: 0, z: 0}
+  newDirection: {x: 0, y: 0, z: 0}
+  player: {fileID: 0}
+  canCollide: 1
+  animator: {fileID: 0}
+  dmg: 0
+  canMove: 1
+  sees: 0
+  isInAttackRange: 0
+  useMeleeAnim: 0
+  canDmgOnCol: 1
 --- !u!54 &6238620451675224716
 Rigidbody:
   m_ObjectHideFlags: 0

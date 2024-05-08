@@ -52,15 +52,19 @@ public class WebSlide : MonoBehaviour
 
         diference += diferenceTemp;
 
-        gameObject.GetComponent<SpriteRenderer>().size += new Vector2(0,diference-3);
-        gameObject.GetComponent<BoxCollider>().size += new Vector3(0,diference-3,0);
+        gameObject.GetComponent<SpriteRenderer>().size += new Vector2(0,diference-15);
+        gameObject.GetComponent<BoxCollider>().size += new Vector3(0,diference-15,0);
         transform.parent.position = new Vector3((bossPos.x + bossTrans.position.x) / 2, bossTrans.position.y, (bossPos.z + bossTrans.position.z) / 2);
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player")
+        {
+            GameManager.instance.player.GetComponent<PlayerController>().rb.velocity = Vector3.zero;
             GameManager.instance.player.GetComponent<PlayerController>().speed = GameManager.instance.player.GetComponent<PlayerController>().speed / 2;
+        }
+           
     }
 
     private void OnTriggerExit(Collider other)

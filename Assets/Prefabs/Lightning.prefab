@@ -539,7 +539,7 @@ GameObject:
   - component: {fileID: 5957849818613187294}
   m_Layer: 0
   m_Name: Lightning
-  m_TagString: Untagged
+  m_TagString: Spell
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -601,7 +601,6 @@ MonoBehaviour:
   spell: {fileID: 11400000, guid: c64bffb8a96d5c04b9d3f23b31f40655, type: 2}
   animator: {fileID: 2711953055614352344}
   dmg: 5
-  ammount: 0
 --- !u!54 &5957849818613187294
 Rigidbody:
   m_ObjectHideFlags: 0

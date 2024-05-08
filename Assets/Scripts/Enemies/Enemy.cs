@@ -53,6 +53,8 @@ public abstract class Enemy : MonoBehaviour
 
     public bool useMeleeAnim=false;
 
+    public bool canDmgOnCol = true;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -84,9 +86,15 @@ public abstract class Enemy : MonoBehaviour
 
     public void OnCollisionStay(Collision collision)
     {
-        if (collision.gameObject.tag == "Player" && canCollide && !player.GetComponent<PlayerController>().isDashing)
+        if (collision.gameObject.tag == "Player" && canCollide && !player.GetComponent<PlayerController>().isDashing && !canDmgOnCol)
         {
             useMeleeAnim = true;
+            canCollide = false;
+            Invoke("CanCollideAgain", 2f);
+        }
+        else if (collision.gameObject.tag == "Player" && canCollide && !player.GetComponent<PlayerController>().isDashing && canDmgOnCol)
+        {
+            player.GetComponent<PlayerController>().GetHit(dmgOnCol);
             canCollide = false;
             Invoke("CanCollideAgain", 2f);
         }
@@ -117,6 +125,7 @@ public abstract class Enemy : MonoBehaviour
     {
         if (hp<=0)
         {
+            GameManager.instance.exp += Random.Range(5, 11);
             Destroy(gameObject);
         }
     }

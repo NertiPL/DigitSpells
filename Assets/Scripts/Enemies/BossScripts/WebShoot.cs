@@ -41,7 +41,11 @@ public class WebShoot : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player")
+        {
+            GameManager.instance.player.GetComponent<PlayerController>().rb.velocity = Vector3.zero;
             GameManager.instance.player.GetComponent<PlayerController>().speed = GameManager.instance.player.GetComponent<PlayerController>().speed / 2;
+        }
+            
     }
     private void OnTriggerExit(Collider other)
     {

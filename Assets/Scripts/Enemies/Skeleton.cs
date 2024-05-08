@@ -21,10 +21,8 @@ public class Skeleton : Enemy
 
         player = GameManager.instance.player.gameObject;
 
-        isMage = true;
 
-
-        /*if (!isMage)
+        if (!isMage)
         {
             switch (Random.Range(0, 2))
             {
@@ -45,7 +43,7 @@ public class Skeleton : Enemy
                 newSkelly.GetComponent<Skeleton>().isMage = true;
                 Destroy(gameObject);
             }
-        } */
+        } 
 
         if (isMage)
         {
