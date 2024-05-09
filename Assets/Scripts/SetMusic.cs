@@ -5,8 +5,12 @@ using UnityEngine;
 public class SetMusic : MonoBehaviour
 {
     public AudioClip musicClip;
-    public AudioSource musicSource;
+    AudioSource musicSource;
 
+    private void Start()
+    {
+        musicSource = GameManager.instance.music;
+    }
 
     private void OnTriggerEnter(Collider other)
     {

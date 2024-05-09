@@ -14,7 +14,19 @@ public class GameManager : MonoBehaviour
     public List<Spells> unlockedSpells;
     public List<Spells> chosenSpells;
     public List<float> numbersEq;
+    public AudioSource music;
+    public AudioSource SFX;
 
+    public float sensitivityY;
+    public float sensitivityX;
+
+    public float exp = 0;
+
+    public bool isPostProcessing;
+    public float renderDis;
+    public int graphicsValue;
+    public bool isFullscreen;
+    public float FOV;
     //-----------------------------------------------------------------
 
     public GameObject canvas;
@@ -44,15 +56,24 @@ public class GameManager : MonoBehaviour
     public GameObject SpellLvlUpStation;
 
     public GameObject SettingsPanel;
-    public AudioSource music;
-    public AudioSource SFX;
 
-    public float sensitivityY;
-    public float sensitivityX;
+    public List<Spells> allSpells;
 
     public Terrain terrain;
 
-    public float exp=0;
+    public List<AudioClip> soundEffects;
+
+    /*
+     * 0-Use Spell
+     * 1-Get Hit
+     * 2-Hit Smth
+     * 3-Button Click
+     * 4-Unlock Spell
+     * 5-Walk
+     * 6-Dash
+     * 7-Death
+     */
+
     private void Awake()
     {
         if (instance == null)
@@ -61,17 +82,12 @@ public class GameManager : MonoBehaviour
         }
 
         player = (MonoBehaviour)GameObject.FindObjectOfType(typeof(PlayerController));
+        LoadPlayerPrefs();
     }
 
     private void Start()
     {
-        sensitivityX = 400;
-        sensitivityY = 400;
-        chosenSpells=new List<Spells>();
-        for (int i = 0; i < 5; i++)
-        {
-            chosenSpells.Add(null);
-        }
+        
         SetUpSpellIcons();
 
         InvokeRepeating("SpawnManaGems", 0f, 5f);
@@ -83,6 +99,276 @@ public class GameManager : MonoBehaviour
         SpellsVisualUpdate();
         OpenSettingsPanel();
 
+    }
+
+    void LoadPlayerPrefs()
+    {
+        chosenSpells = new List<Spells>();
+        unlockedSpells = new List<Spells>();
+        numbersEq = new List<float>();
+
+        if (PlayerPrefs.HasKey("unlockedSpells_count"))
+        {
+            for(int i=0; i < PlayerPrefs.GetInt("unlockedSpells_count"); i++)
+            {
+                foreach(var spell in allSpells)
+                {
+                    if(spell.id == PlayerPrefs.GetInt("unlockedSpellsId_" + i))
+                    {
+                        unlockedSpells.Add(spell);
+                        break;
+                    }
+                }
+            }
+        }
+        else
+        {
+            foreach (var spell in allSpells)
+            {
+                spell.lvl = 0;
+            }
+            unlockedSpells.Add(allSpells[0]);
+        }
+
+        if (PlayerPrefs.HasKey("chosenSpells_count"))
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                foreach (var spell in allSpells)
+                {
+                    if (spell.id == PlayerPrefs.GetInt("chosenSpellsId_" + i))
+                    {
+                        chosenSpells.Add(spell);
+                        break;
+                    }
+                    else if (PlayerPrefs.GetInt("chosenSpellsId_" + i) == 10)
+                    {
+                        chosenSpells.Add(null);
+                        break;
+                    }
+                }
+            }
+        }
+        else
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                chosenSpells.Add(null);
+            }
+        }
+
+        if (PlayerPrefs.HasKey("numbersEq_count"))
+        {
+            for (int i = 0; i < PlayerPrefs.GetFloat("numbersEq_count"); i++)
+            {
+                numbersEq.Add(PlayerPrefs.GetFloat("numbersEq_" + i));
+            }
+        }
+
+        if (PlayerPrefs.HasKey("musicVol"))
+        {
+            music.volume=PlayerPrefs.GetFloat("musicVol");
+        }
+        else
+        {
+            music.volume = 1;
+        }
+        if (PlayerPrefs.HasKey("sfxVol"))
+        {
+            SFX.volume = PlayerPrefs.GetFloat("sfxVol");
+        }
+        else
+        {
+            SFX.volume = 1;
+        }
+
+        if (PlayerPrefs.HasKey("sensitivityX"))
+        {
+            sensitivityX = PlayerPrefs.GetFloat("sensitivityX");
+        }
+        else
+        {
+            sensitivityX = 400;
+        }
+        if (PlayerPrefs.HasKey("sensitivityY"))
+        {
+            sensitivityY = PlayerPrefs.GetFloat("sensitivityY");
+        }
+        else
+        {
+            sensitivityY = 400;
+        }
+
+        if (PlayerPrefs.HasKey("exp"))
+        {
+           exp=PlayerPrefs.GetFloat("exp");
+        }
+        else
+        {
+            exp = 0;
+        }
+
+        if (PlayerPrefs.HasKey("postProcessing"))
+        {
+            if (PlayerPrefs.GetInt("postProcessing") == 0)
+            {
+                isPostProcessing = false;
+            }
+            else
+            {
+                isPostProcessing= true;
+            }
+        }
+        else
+        {
+            isPostProcessing = true;
+        }
+
+        if (PlayerPrefs.HasKey("renderDistance"))
+        {
+            renderDis = PlayerPrefs.GetFloat("renderDistance");
+        }
+        else
+        {
+            renderDis = 1000;
+        }
+
+        if (PlayerPrefs.HasKey("graphicsValue"))
+        {
+            graphicsValue = PlayerPrefs.GetInt("graphicsValue");
+        }
+        else
+        {
+            graphicsValue = 2;
+        }
+
+        if (PlayerPrefs.HasKey("fullscreen"))
+        {
+            if (PlayerPrefs.GetInt("fullscreen") == 0)
+            {
+                isFullscreen = false;
+            }
+            else
+            {
+                isFullscreen = true;
+            }
+        }
+        else
+        {
+            isFullscreen= true;
+        }
+
+        if (PlayerPrefs.HasKey("fov"))
+        {
+            FOV = PlayerPrefs.GetFloat("fov");
+        }
+        else
+        {
+            FOV = 80;
+        }
+
+        if (PlayerPrefs.HasKey("posX")&& PlayerPrefs.HasKey("posY") && PlayerPrefs.HasKey("posZ"))
+        {
+            player.transform.position = new Vector3(PlayerPrefs.GetFloat("posX"), PlayerPrefs.GetFloat("posY"), PlayerPrefs.GetFloat("posZ"));
+        }
+
+        if (PlayerPrefs.HasKey("rotX") && PlayerPrefs.HasKey("rotY") && PlayerPrefs.HasKey("rotZ"))
+        {
+            player.transform.eulerAngles = new Vector3(PlayerPrefs.GetFloat("rotX"), PlayerPrefs.GetFloat("rotY"), PlayerPrefs.GetFloat("rotZ"));
+        }
+
+        if (PlayerPrefs.HasKey("playerHp"))
+        {
+            player.GetComponent<PlayerController>().hp=PlayerPrefs.GetFloat("playerHp");
+        }
+
+        SavePlayerPrefs();
+    }
+
+    public void SavePlayerPrefs()
+    {
+        //unlockedSpells
+        PlayerPrefs.SetInt("unlockedSpells_count", unlockedSpells.Count);
+        for (int i = 0; i < unlockedSpells.Count; i++)
+        {
+            PlayerPrefs.SetInt("unlockedSpellsId_" + i, unlockedSpells[i].id);
+            PlayerPrefs.SetInt("unlockedSpellsLvl_" + i, unlockedSpells[i].lvl);
+        }
+
+        //chosenSpells
+        PlayerPrefs.SetInt("chosenSpells_count", chosenSpells.Count);
+        for (int i = 0; i < chosenSpells.Count; i++)
+        {
+            if (chosenSpells[i] == null)
+            {
+                PlayerPrefs.SetInt("chosenSpellsId_" + i, 10);
+            }
+            else
+            {
+                PlayerPrefs.SetInt("chosenSpellsId_" + i, chosenSpells[i].id);
+            }
+        }
+
+        //nums in eq
+        PlayerPrefs.SetFloat("numbersEq_count", numbersEq.Count);
+        for (int i = 0; i < numbersEq.Count; i++)
+        {
+            PlayerPrefs.SetFloat("numbersEq_" + i, numbersEq[i]);
+        }
+
+        //volume
+        PlayerPrefs.SetFloat("musicVol", music.volume);
+        PlayerPrefs.SetFloat("sfxVol", SFX.volume);
+
+        //sensitivity
+        PlayerPrefs.SetFloat("sensitivityX", sensitivityX);
+        PlayerPrefs.SetFloat("sensitivityY", sensitivityY);
+
+        //EXP
+        PlayerPrefs.SetFloat("exp", exp);
+
+        //postProcessing
+        if(isPostProcessing)
+        {
+            PlayerPrefs.SetInt("postProcessing", 1);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("postProcessing", 0);
+        }
+
+        //render distance
+        PlayerPrefs.SetFloat("renderDistance", renderDis);
+
+        //graphicsValue
+        PlayerPrefs.SetInt("graphicsValue", graphicsValue);
+
+        //fullscreen
+        if (isFullscreen)
+        {
+            PlayerPrefs.SetInt("fullscreen", 1);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("fullscreen", 0);
+        }
+
+        //FOV
+        PlayerPrefs.SetFloat("fov", FOV);
+
+        //player
+            //pos
+            PlayerPrefs.SetFloat("posX",player.transform.position.x);
+            PlayerPrefs.SetFloat("posY",player.transform.position.y);
+            PlayerPrefs.SetFloat("posZ",player.transform.position.z);
+
+            //rotation
+            PlayerPrefs.SetFloat("rotX", player.transform.rotation.x);
+            PlayerPrefs.SetFloat("rotY", player.transform.rotation.y);
+            PlayerPrefs.SetFloat("rotZ", player.transform.rotation.z);
+
+            //hp
+            PlayerPrefs.SetFloat("playerHp", player.GetComponent<PlayerController>().hp);
     }
 
     void SpawnManaGems()
@@ -209,7 +495,7 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void GameOverMenu()
+    public void GoToMenu()
     {
         SceneManager.LoadScene("MainMenu");
     }
@@ -217,6 +503,18 @@ public class GameManager : MonoBehaviour
     public void GameOverResetLvl()
     {
         SceneManager.LoadScene("Level1");
+    }
+
+    public void ExitGame()
+    {
+        SavePlayerPrefs();
+        Application.Quit();
+    }
+
+    public void BttnSound()
+    {
+        SFX.clip = soundEffects[3];
+        SFX.Play();
     }
 
 }

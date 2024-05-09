@@ -1,7 +1,6 @@
 using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.EditorTools;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -32,6 +31,8 @@ public class InGameSettings : MonoBehaviour
     public AudioSource SFX;
     public Slider musicVolSlider;
     public Slider SFXVolSlider;
+    public TMP_Text SFXValueTxt;
+    public TMP_Text musicValueTxt;
 
     //controls
     [Header("Controls:")]
@@ -44,9 +45,16 @@ public class InGameSettings : MonoBehaviour
     //language
     private void Start()
     {
-        SensitivityYSlider.value = GameManager.instance.sensitivityY;
-        SensitivityXSlider.value = GameManager.instance.sensitivityX;
+        SensitivityYSlider.value = GameManager.instance.sensitivityY/100;
+        SensitivityXSlider.value = GameManager.instance.sensitivityX/100;
+        musicVolSlider.value = GameManager.instance.music.volume;
+        SFXVolSlider.value = GameManager.instance.SFX.volume;
+        postprocessingToggle.isOn = GameManager.instance.isPostProcessing;
+        RenderDisSlider.value = GameManager.instance.renderDis / 100;
+        fullscreenToggle.isOn = GameManager.instance.isFullscreen;
+        FOVSlider.value = GameManager.instance.FOV / 160;
         dropdownQuality.value = QualitySettings.GetQualityLevel();
+        ChangeGraphicsLevel(GameManager.instance.graphicsValue);
     }
 
     private void Update()
@@ -77,19 +85,25 @@ public class InGameSettings : MonoBehaviour
     void ChangeAudio()
     {
         music.volume = musicVolSlider.value;
+        musicValueTxt.text = Mathf.RoundToInt(musicVolSlider.value*100).ToString() + "%";
         SFX.volume = SFXVolSlider.value;
+        SFXValueTxt.text = Mathf.RoundToInt(SFXVolSlider.value * 100).ToString() + "%";
     }
 
     void ChangeVideo()
     {
         virtualCamera.m_Lens.FieldOfView = FOVSlider.value * 160;
+        GameManager.instance.FOV = FOVSlider.value * 160;
         FOVValueTxt.text = Mathf.RoundToInt(FOVSlider.value * 160).ToString();
 
         virtualCamera.gameObject.GetComponent<CinemachinePostProcessing>().enabled = postprocessingToggle.isOn;
+        GameManager.instance.isPostProcessing = postprocessingToggle.isOn;
 
         Screen.fullScreen = fullscreenToggle.isOn;
+        GameManager.instance.isFullscreen = fullscreenToggle.isOn;
 
         GameManager.instance.terrain.basemapDistance = RenderDisSlider.value * 100;
+        GameManager.instance.renderDis = RenderDisSlider.value * 100;
         RenderDisValueTxt.text = Mathf.RoundToInt(RenderDisSlider.value * 100).ToString();
 
     }
@@ -104,6 +118,7 @@ public class InGameSettings : MonoBehaviour
 
     public void ChangeGraphicsLevel(int value)
     {
+        GameManager.instance.graphicsValue = value;
         QualitySettings.SetQualityLevel(value);
         QualitySettings.renderPipeline = qualityLevels[value];
     }

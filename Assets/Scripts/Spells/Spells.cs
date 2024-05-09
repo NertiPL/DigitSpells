@@ -32,6 +32,8 @@ public class Spells : ScriptableObject
     public GameObject prefab;
     public bool onTopOnStaff;
 
+    public int id;
+
     public float LvlChanges(float dmgOrHeal)
     {
         return dmgOrHeal * (1+lvl/2);

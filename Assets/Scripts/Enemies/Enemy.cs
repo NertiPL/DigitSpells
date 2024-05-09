@@ -55,14 +55,23 @@ public abstract class Enemy : MonoBehaviour
 
     public bool canDmgOnCol = true;
 
+    public AudioSource sound;
+    bool playSound = true;
+
     private void Start()
     {
+        sound = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody>();
 
         player = GameManager.instance.player.gameObject;
     }
     private void Update()
     {
+        if (playSound)
+        {
+            playSound = false;
+            Invoke("PlaySound", Random.Range(5,31));
+        }
         if (useMeleeAnim)
         {
             CollideAnim();
@@ -114,6 +123,8 @@ public abstract class Enemy : MonoBehaviour
         {
             hp -= dmg;
         }
+        GameManager.instance.SFX.clip = GameManager.instance.soundEffects[2];
+        GameManager.instance.SFX.Play();
     }
 
     public void CanCollideAgain()
@@ -128,6 +139,12 @@ public abstract class Enemy : MonoBehaviour
             GameManager.instance.exp += Random.Range(5, 11);
             Destroy(gameObject);
         }
+    }
+
+    void PlaySound()
+    {
+        sound.Play();
+        playSound = true;
     }
 
     public abstract void WalkAnim();

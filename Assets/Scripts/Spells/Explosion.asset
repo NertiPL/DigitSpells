@@ -21,3 +21,4 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: 092a90f3b93b0f544a9ad35d0ead0be0, type: 3}
   prefab: {fileID: 6175621204541023980, guid: e98315513cc20464f96383edee1c28f0, type: 3}
   onTopOnStaff: 0
+  id: 4

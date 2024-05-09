@@ -46,6 +46,11 @@ public class PlayerController : MonoBehaviour
 
     IEnumerable cooldownCoroutine;
 
+    bool isWalking;
+
+    bool isAttacking = false;
+    bool isOnTopOfStaff = false;
+
     void Start()
     {
         ogSpeed = speed;
@@ -77,6 +82,8 @@ public class PlayerController : MonoBehaviour
         CorrectHp();
 
         Rotation();
+
+        StickToTopOfStaff();
     }
 
     void Movement()
@@ -84,19 +91,53 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.W))
         {
+            GameManager.instance.SFX.clip = GameManager.instance.soundEffects[5];
+            GameManager.instance.SFX.Play();
             rb.velocity += transform.forward * 1 * speed * Time.fixedDeltaTime;
+            if (!isWalking && !isAttacking)
+            {
+                isWalking = true;
+                animator.Play("Walk");
+            }
         }
         if (Input.GetKey(KeyCode.S))
         {
+            GameManager.instance.SFX.clip = GameManager.instance.soundEffects[5];
+            GameManager.instance.SFX.Play();
             rb.velocity += transform.forward * -1 * speed * Time.fixedDeltaTime;
+            if (!isWalking && !isAttacking)
+            {
+                isWalking = true;
+                animator.Play("Walk");
+            }
         }
         if (Input.GetKey(KeyCode.A))
         {
+            GameManager.instance.SFX.clip = GameManager.instance.soundEffects[5];
+            GameManager.instance.SFX.Play();
             rb.velocity += transform.right * -1 * speed * Time.fixedDeltaTime;
+            if (!isWalking && !isAttacking)
+            {
+                isWalking = true;
+                animator.Play("Walk");
+            }
         }
         if (Input.GetKey(KeyCode.D))
         {
+            GameManager.instance.SFX.clip = GameManager.instance.soundEffects[5];
+            GameManager.instance.SFX.Play();
             rb.velocity += transform.right * 1 * speed * Time.fixedDeltaTime;
+            if (!isWalking && !isAttacking)
+            {
+                isWalking = true;
+                animator.Play("Walk");
+            }
+        }
+
+        if (!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.S) && !isAttacking)
+        {
+            isWalking = false;
+            animator.Play("Idle");
         }
 
         VelocitySuppressor();
@@ -171,6 +212,9 @@ public class PlayerController : MonoBehaviour
 
     void Dash()
     {
+        animator.Play("Dash");
+        GameManager.instance.SFX.clip = GameManager.instance.soundEffects[6];
+        GameManager.instance.SFX.Play();
         CancelInvoke("RegenStamina");
         stamina -= staminaCost;
         canDash = false;
@@ -275,20 +319,34 @@ public class PlayerController : MonoBehaviour
 
     public void ProceedAttack(int chosenSpellsIndex)
     {
+        isAttacking = true;
         GameObject attack;
 
         if (GameManager.instance.chosenSpells[chosenSpellsIndex].onTopOnStaff)
         {
+            isOnTopOfStaff = true;
             attack = Instantiate(GameManager.instance.chosenSpells[chosenSpellsIndex].prefab, topOfStaff.position, topOfStaff.rotation);
         }
         else
         {
+            isOnTopOfStaff=false;
             attack = Instantiate(GameManager.instance.chosenSpells[chosenSpellsIndex].prefab, transform.position + transform.forward, transform.rotation);
         }
 
         attack.GetComponent<MonoBehaviour>().enabled = false;
-        animator.Play("StaffAnimation");
+        animator.Play("Attack");
         currentAttack = attack;
+        GameManager.instance.SFX.clip = GameManager.instance.soundEffects[0];
+        GameManager.instance.SFX.Play();
+    }
+
+    void StickToTopOfStaff()
+    {
+        if(isAttacking && currentAttack!=null && isOnTopOfStaff)
+        {
+            currentAttack.transform.position=topOfStaff.position;
+            currentAttack.transform.rotation=transform.rotation;
+        }
     }
 
     public void StartCooldown(int whichBtnOnCdId, float timeOfCd)
@@ -307,6 +365,8 @@ public class PlayerController : MonoBehaviour
 
     public void GetHit(float dmg)
     {
+        GameManager.instance.SFX.clip = GameManager.instance.soundEffects[1];
+        GameManager.instance.SFX.Play();
         hp -= dmg;
     }
 
@@ -314,6 +374,8 @@ public class PlayerController : MonoBehaviour
     {
         if(hp <= 0)
         {
+            GameManager.instance.SFX.clip = GameManager.instance.soundEffects[7];
+            GameManager.instance.SFX.Play();
             GameManager.instance.GameOver();
         }
     }
@@ -322,6 +384,7 @@ public class PlayerController : MonoBehaviour
     {
         currentAttack.GetComponent<MonoBehaviour>().enabled = true;
         currentAttack = null;
+        isAttacking = false;
     }
 
     public void EndAnimShoot()
