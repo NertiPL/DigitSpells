@@ -351,7 +351,7 @@ MonoBehaviour:
   isInAttackRange: 0
   useMeleeAnim: 0
   canDmgOnCol: 1
-  sound: {fileID: 0}
+  sound: {fileID: -871470202643195780}
   attacked: 0
   isAlreadyWalking: 0
   webPrefab: {fileID: 5738973108862237125, guid: 3270f002830e846449f1c63813f65941,
@@ -393,9 +393,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 0b221f2563fe84f49b150b2404ef0adc, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.616
   m_Pitch: 1
   Loop: 0
   Mute: 0

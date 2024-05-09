@@ -88,11 +88,15 @@ public class PlayerController : MonoBehaviour
 
     void Movement()
     {
-
-        if (Input.GetKey(KeyCode.W))
+        /*if(isWalking)
         {
             GameManager.instance.SFX.clip = GameManager.instance.soundEffects[5];
             GameManager.instance.SFX.Play();
+        }*/
+
+        if (Input.GetKey(KeyCode.W))
+        {
+
             rb.velocity += transform.forward * 1 * speed * Time.fixedDeltaTime;
             if (!isWalking && !isAttacking)
             {
@@ -102,8 +106,7 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.S))
         {
-            GameManager.instance.SFX.clip = GameManager.instance.soundEffects[5];
-            GameManager.instance.SFX.Play();
+
             rb.velocity += transform.forward * -1 * speed * Time.fixedDeltaTime;
             if (!isWalking && !isAttacking)
             {
@@ -113,8 +116,6 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.A))
         {
-            GameManager.instance.SFX.clip = GameManager.instance.soundEffects[5];
-            GameManager.instance.SFX.Play();
             rb.velocity += transform.right * -1 * speed * Time.fixedDeltaTime;
             if (!isWalking && !isAttacking)
             {
@@ -124,8 +125,6 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.D))
         {
-            GameManager.instance.SFX.clip = GameManager.instance.soundEffects[5];
-            GameManager.instance.SFX.Play();
             rb.velocity += transform.right * 1 * speed * Time.fixedDeltaTime;
             if (!isWalking && !isAttacking)
             {
@@ -213,6 +212,7 @@ public class PlayerController : MonoBehaviour
     void Dash()
     {
         animator.Play("Dash");
+        GameManager.instance.SFX.Stop();
         GameManager.instance.SFX.clip = GameManager.instance.soundEffects[6];
         GameManager.instance.SFX.Play();
         CancelInvoke("RegenStamina");

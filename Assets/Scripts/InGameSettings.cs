@@ -55,6 +55,7 @@ public class InGameSettings : MonoBehaviour
         FOVSlider.value = GameManager.instance.FOV / 160;
         dropdownQuality.value = QualitySettings.GetQualityLevel();
         ChangeGraphicsLevel(GameManager.instance.graphicsValue);
+
     }
 
     private void Update()

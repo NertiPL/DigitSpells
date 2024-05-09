@@ -33,7 +33,7 @@ public class Chest : MonoBehaviour
 
     void GiveGems()
     {
-        for(int i = 0; i <Random.Range(0, 5); i++)
+        for(int i = 0; i <Random.Range(2, 5); i++)
         {
             GameManager.instance.numbersEq.Add(Random.Range(0, 21));
             GameManager.instance.UpdateEqNums();

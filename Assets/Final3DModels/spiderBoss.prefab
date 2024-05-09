@@ -196,7 +196,7 @@ MonoBehaviour:
   isInAttackRange: 0
   useMeleeAnim: 0
   canDmgOnCol: 1
-  sound: {fileID: 0}
+  sound: {fileID: 8969834775344211584}
 --- !u!54 &5395788904877252511
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -234,7 +234,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 0b221f2563fe84f49b150b2404ef0adc, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1

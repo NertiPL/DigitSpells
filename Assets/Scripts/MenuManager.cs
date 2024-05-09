@@ -159,4 +159,8 @@ public class MenuManager : MonoBehaviour
         QualitySettings.renderPipeline = qualityLevels[value];
     }
 
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
 }
