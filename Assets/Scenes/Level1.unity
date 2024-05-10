@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.1882376, g: 0.4144311, b: 0.5059341, a: 1}
+  m_IndirectSpecularColor: {r: 0.19038694, g: 0.4146678, b: 0.5059006, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1972,7 +1972,7 @@ PrefabInstance:
     - target: {fileID: 6729249066847096950, guid: 291606f980cf4bc448e882d7b0a64c29,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.0338
       objectReference: {fileID: 0}
     - target: {fileID: 6729249066847096950, guid: 291606f980cf4bc448e882d7b0a64c29,
         type: 3}
@@ -22362,7 +22362,7 @@ PrefabInstance:
     - target: {fileID: 1199691216720819507, guid: 1583e6ad3e81035448abd0e1d4f8c021,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0
+      value: 0.0338
       objectReference: {fileID: 0}
     - target: {fileID: 1199691216720819507, guid: 1583e6ad3e81035448abd0e1d4f8c021,
         type: 3}
@@ -24052,7 +24052,7 @@ PrefabInstance:
     - target: {fileID: 6729249066847096950, guid: 291606f980cf4bc448e882d7b0a64c29,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0
+      value: 0.0338
       objectReference: {fileID: 0}
     - target: {fileID: 6729249066847096950, guid: 291606f980cf4bc448e882d7b0a64c29,
         type: 3}
@@ -27727,7 +27727,7 @@ PrefabInstance:
     - target: {fileID: 6729249066847096950, guid: 291606f980cf4bc448e882d7b0a64c29,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.0338
       objectReference: {fileID: 0}
     - target: {fileID: 6729249066847096950, guid: 291606f980cf4bc448e882d7b0a64c29,
         type: 3}
@@ -27816,7 +27816,7 @@ PrefabInstance:
     - target: {fileID: 6729249066847096950, guid: 291606f980cf4bc448e882d7b0a64c29,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.0338
       objectReference: {fileID: 0}
     - target: {fileID: 6729249066847096950, guid: 291606f980cf4bc448e882d7b0a64c29,
         type: 3}
