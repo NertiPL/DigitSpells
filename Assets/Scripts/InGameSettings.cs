@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using TMPro;
 using Cinemachine.PostFX;
 using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class InGameSettings : MonoBehaviour
 {
@@ -50,7 +51,7 @@ public class InGameSettings : MonoBehaviour
         musicVolSlider.value = GameManager.instance.music.volume;
         SFXVolSlider.value = GameManager.instance.SFX.volume;
         postprocessingToggle.isOn = GameManager.instance.isPostProcessing;
-        RenderDisSlider.value = GameManager.instance.renderDis / 100;
+        RenderDisSlider.value = GameManager.instance.renderDis / 10;
         fullscreenToggle.isOn = GameManager.instance.isFullscreen;
         FOVSlider.value = GameManager.instance.FOV / 40;
         dropdownQuality.value = QualitySettings.GetQualityLevel();
@@ -97,15 +98,16 @@ public class InGameSettings : MonoBehaviour
         GameManager.instance.FOV = FOVSlider.value * 40;
         FOVValueTxt.text = Mathf.RoundToInt(FOVSlider.value * 40).ToString();
 
-        virtualCamera.gameObject.GetComponent<CinemachinePostProcessing>().enabled = postprocessingToggle.isOn;
+        GameManager.instance.mainCamera.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = postprocessingToggle.isOn;
         GameManager.instance.isPostProcessing = postprocessingToggle.isOn;
 
         Screen.fullScreen = fullscreenToggle.isOn;
         GameManager.instance.isFullscreen = fullscreenToggle.isOn;
 
-        GameManager.instance.terrain.basemapDistance = RenderDisSlider.value * 100;
-        GameManager.instance.renderDis = RenderDisSlider.value * 100;
-        RenderDisValueTxt.text = Mathf.RoundToInt(RenderDisSlider.value * 100).ToString();
+        virtualCamera.m_Lens.FarClipPlane = RenderDisSlider.value * 10;
+
+        GameManager.instance.renderDis = RenderDisSlider.value * 10;
+        RenderDisValueTxt.text = Mathf.RoundToInt(RenderDisSlider.value * 10).ToString();
 
     }
 

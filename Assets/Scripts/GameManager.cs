@@ -30,7 +30,8 @@ public class GameManager : MonoBehaviour
     //-----------------------------------------------------------------
 
     public GameObject canvas;
-    
+    public GameObject mainCamera;
+
     int m = 0;
     public static GameManager instance;
 
