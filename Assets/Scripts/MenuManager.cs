@@ -102,7 +102,7 @@ public class MenuManager : MonoBehaviour
         PlayerPrefs.SetFloat("musicVol", music.volume);
         PlayerPrefs.SetFloat("sfxVol", SFX.volume);
 
-        PlayerPrefs.SetFloat("fov", FOVSlider.value * 160);
+        PlayerPrefs.SetFloat("fov", FOVSlider.value * 40);
 
         if (postprocessingToggle.isOn)
         {
@@ -137,7 +137,7 @@ public class MenuManager : MonoBehaviour
 
     void ChangeVideo()
     {
-        FOVValueTxt.text = Mathf.RoundToInt(FOVSlider.value * 160).ToString();
+        FOVValueTxt.text = Mathf.RoundToInt(FOVSlider.value * 40).ToString();
 
 
         Screen.fullScreen = fullscreenToggle.isOn;

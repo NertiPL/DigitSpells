@@ -52,7 +52,7 @@ public class InGameSettings : MonoBehaviour
         postprocessingToggle.isOn = GameManager.instance.isPostProcessing;
         RenderDisSlider.value = GameManager.instance.renderDis / 100;
         fullscreenToggle.isOn = GameManager.instance.isFullscreen;
-        FOVSlider.value = GameManager.instance.FOV / 160;
+        FOVSlider.value = GameManager.instance.FOV / 40;
         dropdownQuality.value = QualitySettings.GetQualityLevel();
         ChangeGraphicsLevel(GameManager.instance.graphicsValue);
 
@@ -93,9 +93,9 @@ public class InGameSettings : MonoBehaviour
 
     void ChangeVideo()
     {
-        virtualCamera.m_Lens.FieldOfView = FOVSlider.value * 160;
-        GameManager.instance.FOV = FOVSlider.value * 160;
-        FOVValueTxt.text = Mathf.RoundToInt(FOVSlider.value * 160).ToString();
+        virtualCamera.m_Lens.FieldOfView = FOVSlider.value * 40;
+        GameManager.instance.FOV = FOVSlider.value * 40;
+        FOVValueTxt.text = Mathf.RoundToInt(FOVSlider.value * 40).ToString();
 
         virtualCamera.gameObject.GetComponent<CinemachinePostProcessing>().enabled = postprocessingToggle.isOn;
         GameManager.instance.isPostProcessing = postprocessingToggle.isOn;
