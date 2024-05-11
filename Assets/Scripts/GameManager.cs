@@ -99,8 +99,17 @@ public class GameManager : MonoBehaviour
         SpellsVisualUpdate();
         OpenSettingsPanel();
 
+        CheckAmmountOfNumsInEq();
     }
 
+    void CheckAmmountOfNumsInEq()
+    {
+        if (numbersEq.Count >15)
+        {
+            numbersEq.RemoveAt(15);
+            UpdateEqNums();
+        }
+    }
     void LoadPlayerPrefs()
     {
         chosenSpells = new List<Spells>();
@@ -373,7 +382,7 @@ public class GameManager : MonoBehaviour
 
     void SpawnManaGems()
     {
-        var manaG = Instantiate(manaGem, new Vector3(Random.Range(player.transform.position.x - 20, player.transform.position.x + 20), 10, Random.Range(player.transform.position.z - 20, player.transform.position.z + 20)), Quaternion.identity);
+        var manaG = Instantiate(manaGem, new Vector3(Random.Range(player.transform.position.x - 20, player.transform.position.x + 20), player.transform.position.y+13, Random.Range(player.transform.position.z - 20, player.transform.position.z + 20)), Quaternion.identity);
 
         var numOnManaG = Random.Range(0, 20);
 
