@@ -22,6 +22,8 @@ public class WebShoot : MonoBehaviour
         startingPlayerPos = GameManager.instance.player.transform.position;
         animator.Play("WebShoot");
         step = Vector3.Distance(transform.position, startingPlayerPos)/40;
+        var targetDirection = GameManager.instance.transform.position - transform.position;
+        transform.Rotate( Vector3.RotateTowards(transform.forward, targetDirection, 1000f, 0.0f));
 
         InvokeRepeating("GoTowardsPlayer", 0f, 0.03f);
     }
