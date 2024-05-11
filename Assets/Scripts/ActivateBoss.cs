@@ -5,7 +5,7 @@ using UnityEngine;
 public class ActivateBoss : MonoBehaviour
 {
     public GameObject boss;
-    void Start()
+    void Awake()
     {
         boss.GetComponent<MonoBehaviour>().enabled = false;
     }
