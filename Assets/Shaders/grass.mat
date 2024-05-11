@@ -51,8 +51,8 @@ Material:
     - _WindNoiseSpeed: 0.5
     m_Colors:
     - _BottomColor: {r: 0.23657632, g: 0.6792453, b: 0.15699539, a: 0}
-    - _FarColor: {r: 0.2783019, g: 1, b: 0.35083434, a: 0}
-    - _NearColor: {r: 0.16398373, g: 0.8207547, b: 0.034843344, a: 0}
+    - _FarColor: {r: 0.28235295, g: 0.43529415, b: 0.23137257, a: 0}
+    - _NearColor: {r: 0.37500286, g: 0.6886792, b: 0.2891153, a: 0}
     - _NearFarRange: {r: 15, g: 40, b: 0, a: 0}
     - _WindNoiseContrast: {r: 0.5, g: -2, b: 0, a: 0}
   m_BuildTextureStacks: []
