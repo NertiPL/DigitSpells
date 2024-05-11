@@ -6,7 +6,8 @@ using TMPro;
 public class Spawner : MonoBehaviour
 {
     GameObject spawner;
-    GameObject door;
+    public GameObject door;
+    GameObject doorInfo;
     public TMP_Text infoUI;
 
     public List<GameObject> enemiesThatCanSpawn;
@@ -23,8 +24,10 @@ public class Spawner : MonoBehaviour
     private void Start()
     {
         enemiesSpawned = new List<GameObject>();
-        spawner = transform.GetChild(1).gameObject;
-        door = transform.GetChild(0).gameObject;
+        spawner = transform.GetChild(0).gameObject;
+        doorInfo = transform.GetChild(1).gameObject;
+
+        doorInfo.transform.position = door.transform.position;
 
         for(int i = 0; i < amountAtStart; i++)
         {
@@ -38,7 +41,7 @@ public class Spawner : MonoBehaviour
         if(other.gameObject.tag == "Player")
         {
             InvokeRepeating("SpawnEnemies", 0f, amountOfTimeBetweenSpawn);
-            transform.GetChild(2).gameObject.SetActive(false);
+            spawner.SetActive(false);
         }
     }
 

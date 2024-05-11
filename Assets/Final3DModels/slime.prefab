@@ -246,7 +246,7 @@ MonoBehaviour:
   lvl: 0
   hp: 10
   enemyClass: 10
-  dmgOnCol: 0
+  dmgOnCol: 10
   weakSpellType: 
   strongSpellType: 
   targetDirection: {x: 0, y: 0, z: 0}

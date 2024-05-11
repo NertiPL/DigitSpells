@@ -143,8 +143,12 @@ public abstract class Enemy : MonoBehaviour
 
     void PlaySound()
     {
-        sound.volume = GameManager.instance.SFX.volume;
-        sound.Play();
+        if(sound.clip != null)
+        {
+            sound.volume = GameManager.instance.SFX.volume;
+            sound.Play();
+        }
+
         playSound = true;
     }
 
