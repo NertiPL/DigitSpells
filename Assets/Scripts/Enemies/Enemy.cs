@@ -58,6 +58,8 @@ public abstract class Enemy : MonoBehaviour
     public AudioSource sound;
     bool playSound = true;
 
+    public bool attacked = false;
+
     private void Start()
     {
         sound = GetComponent<AudioSource>();
@@ -67,6 +69,8 @@ public abstract class Enemy : MonoBehaviour
     }
     private void Update()
     {
+        
+
         if (playSound)
         {
             playSound = false;

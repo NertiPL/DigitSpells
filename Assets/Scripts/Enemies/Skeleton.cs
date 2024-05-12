@@ -7,7 +7,6 @@ public class Skeleton : Enemy
 {
     GameObject staff;
     public bool isMage=false;
-    bool attacked=false;
     bool isAlreadyWalking=false;
 
 

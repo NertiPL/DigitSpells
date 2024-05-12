@@ -8,6 +8,7 @@ public class ActivateBoss : MonoBehaviour
     void Awake()
     {
         boss.GetComponent<MonoBehaviour>().enabled = false;
+        boss.GetComponent<Enemy>().enabled = false;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -15,6 +16,7 @@ public class ActivateBoss : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             boss.GetComponent<MonoBehaviour>().enabled = true;
+            boss.GetComponent<Enemy>().enabled = true;
         }
     }
 }

@@ -4,8 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 public class Spider : Enemy
-{
-    public bool attacked = false;
+{ 
     public bool isAlreadyWalking = false;
 
     public GameObject webPrefab;
