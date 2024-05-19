@@ -16,6 +16,7 @@ public class ActivateBoss : MonoBehaviour
 
     void GetInPos()
     {
+        Debug.Log("Moved");
         boss.transform.position = bossPos.position;
     }
 
