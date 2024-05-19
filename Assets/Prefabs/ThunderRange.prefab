@@ -69,4 +69,4 @@ MonoBehaviour:
   thunderPrefab: {fileID: 8425113336212289635, guid: 7e64a7116c0857047bc6cce9c2b31ee5,
     type: 3}
   spell: {fileID: 11400000, guid: c64bffb8a96d5c04b9d3f23b31f40655, type: 2}
-  ammount: 0
+  ammount: 3

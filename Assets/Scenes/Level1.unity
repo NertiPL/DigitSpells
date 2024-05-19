@@ -43057,6 +43057,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6259583108587031284, guid: e8eef490a6e990045b012d1d7dae62ea,
         type: 3}
+      propertyPath: hp
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 6259583108587031284, guid: e8eef490a6e990045b012d1d7dae62ea,
+        type: 3}
       propertyPath: dmg
       value: 5
       objectReference: {fileID: 0}
