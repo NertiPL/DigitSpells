@@ -107,6 +107,11 @@ public class MathMinigameScript : MonoBehaviour
                 usedNums.Add(child.GetComponent<NumDropPlaceHolders>().valueOfGem);
                 usedGemsObjects.Add(child.GetComponent<NumDropPlaceHolders>().draggable);
             }
+            else
+            {
+                equasionCheck = equasionCheck.Remove(2 * (child.GetComponent<NumDropPlaceHolders>().placeHolderId - 1), 1);
+                equasionCheck = equasionCheck.Insert(2 * (child.GetComponent<NumDropPlaceHolders>().placeHolderId - 1), "-21");
+            }
 
         }
 
