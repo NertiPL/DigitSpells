@@ -33413,6 +33413,11 @@ PrefabInstance:
       propertyPath: dmgOnCol
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6970634559563017858, guid: 6d65cb02622c52f429ea05fcd361ccef,
+        type: 3}
+      propertyPath: canDmgOnCol
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7140565462919442657, guid: 6d65cb02622c52f429ea05fcd361ccef,
         type: 3}
       propertyPath: m_StaticEditorFlags
@@ -42768,22 +42773,22 @@ PrefabInstance:
     - target: {fileID: 1110333274128066938, guid: e8eef490a6e990045b012d1d7dae62ea,
         type: 3}
       propertyPath: m_Size.y
-      value: 10.3502035
+      value: 8.83729
       objectReference: {fileID: 0}
     - target: {fileID: 1110333274128066938, guid: e8eef490a6e990045b012d1d7dae62ea,
         type: 3}
       propertyPath: m_Center.x
-      value: 0.00000014199468
+      value: 0.00000007183835
       objectReference: {fileID: 0}
     - target: {fileID: 1110333274128066938, guid: e8eef490a6e990045b012d1d7dae62ea,
         type: 3}
       propertyPath: m_Center.y
-      value: 3.6104796
+      value: 4.366949
       objectReference: {fileID: 0}
     - target: {fileID: 1110333274128066938, guid: e8eef490a6e990045b012d1d7dae62ea,
         type: 3}
       propertyPath: m_Center.z
-      value: 0.00000020641714
+      value: 0.0000001497586
       objectReference: {fileID: 0}
     - target: {fileID: 1188811951768470345, guid: e8eef490a6e990045b012d1d7dae62ea,
         type: 3}
@@ -42794,6 +42799,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: spiderBoss
+      objectReference: {fileID: 0}
+    - target: {fileID: 1277731581398278723, guid: e8eef490a6e990045b012d1d7dae62ea,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 1277731581398278723, guid: e8eef490a6e990045b012d1d7dae62ea,
         type: 3}
@@ -42843,7 +42853,7 @@ PrefabInstance:
     - target: {fileID: 1941256730666776825, guid: e8eef490a6e990045b012d1d7dae62ea,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.0343
+      value: -0.012
       objectReference: {fileID: 0}
     - target: {fileID: 1941256730666776825, guid: e8eef490a6e990045b012d1d7dae62ea,
         type: 3}
@@ -43044,6 +43054,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 6259583108587031284, guid: e8eef490a6e990045b012d1d7dae62ea,
+        type: 3}
+      propertyPath: dmg
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6259583108587031284, guid: e8eef490a6e990045b012d1d7dae62ea,
+        type: 3}
+      propertyPath: sees
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6259583108587031284, guid: e8eef490a6e990045b012d1d7dae62ea,
         type: 3}
@@ -47946,6 +47966,11 @@ PrefabInstance:
     - target: {fileID: 6970634559563017858, guid: 6d65cb02622c52f429ea05fcd361ccef,
         type: 3}
       propertyPath: dmgOnCol
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6970634559563017858, guid: 6d65cb02622c52f429ea05fcd361ccef,
+        type: 3}
+      propertyPath: canDmgOnCol
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7140565462919442657, guid: 6d65cb02622c52f429ea05fcd361ccef,
