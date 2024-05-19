@@ -384,12 +384,13 @@ public class PlayerController : MonoBehaviour
     {
         currentAttack.GetComponent<MonoBehaviour>().enabled = true;
         currentAttack = null;
-        isAttacking = false;
     }
 
     public void EndAnimShoot()
     {
+        Debug.Log("zajeb sie");
         canUseAbility = true;
+        isAttacking = false;
     }
 
 

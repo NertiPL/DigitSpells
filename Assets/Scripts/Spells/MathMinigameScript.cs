@@ -6,10 +6,6 @@ using TMPro;
 using System.Text;
 using System.Linq;
 
-using Unity.Jobs;
-using Unity.Burst;
-using Unity.Collections;
-
 public class MathMinigameScript : MonoBehaviour
 {
     int chosenSpellsIndexHolder;
@@ -54,6 +50,7 @@ public class MathMinigameScript : MonoBehaviour
 
     public void SlideOff()
     {
+        Debug.Log("kys");
         animator.Play("SlideOffScreenAnim");
         RemoveUsedGems();
         if (isCorrect)
