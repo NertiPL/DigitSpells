@@ -5,10 +5,18 @@ using UnityEngine;
 public class ActivateBoss : MonoBehaviour
 {
     public GameObject boss;
+    Transform bossPos;
     void Awake()
     {
         boss.GetComponent<MonoBehaviour>().enabled = false;
         boss.GetComponent<Enemy>().enabled = false;
+        bossPos=boss.transform;
+        Invoke("GetInPos", 2f);
+    }
+
+    void GetInPos()
+    {
+        boss.transform.position = bossPos.position;
     }
 
     private void OnTriggerEnter(Collider other)
