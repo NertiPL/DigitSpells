@@ -134,6 +134,8 @@ public class MathMinigameScript : MonoBehaviour
         equasion.Clear();
         equasionShow.Clear();
         equasionCheck.Clear();
+
+
         tempNumbersEq = new List<float>();
 
         switch (dif)
