@@ -544,6 +544,8 @@ public class GameManager : MonoBehaviour
         }
         PlayerPrefs.DeleteKey("numbersEq_count");
 
+        PlayerPrefs.DeleteKey("playerHp");
+
         SceneManager.LoadScene("Level1");
     }
 
