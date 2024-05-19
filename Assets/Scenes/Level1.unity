@@ -42889,7 +42889,7 @@ PrefabInstance:
     - target: {fileID: 1941256730666776825, guid: e8eef490a6e990045b012d1d7dae62ea,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.599886
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: 1941256730666776825, guid: e8eef490a6e990045b012d1d7dae62ea,
         type: 3}
@@ -43055,6 +43055,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5395788904877252511, guid: e8eef490a6e990045b012d1d7dae62ea,
+        type: 3}
+      propertyPath: m_UseGravity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5395788904877252511, guid: e8eef490a6e990045b012d1d7dae62ea,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 5395788904877252511, guid: e8eef490a6e990045b012d1d7dae62ea,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5589966509057564124, guid: e8eef490a6e990045b012d1d7dae62ea,
         type: 3}

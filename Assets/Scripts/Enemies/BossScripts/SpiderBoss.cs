@@ -36,6 +36,7 @@ public class SpiderBoss : MonoBehaviour
 
     private void Update()
     {
+       
         hp = gameObject.GetComponent<BossEnemy>().hp;
         var targetDirection = GameManager.instance.player.transform.position - transform.position;
         var newDirection = Vector3.RotateTowards(transform.forward, targetDirection, rotationSpeed * Time.deltaTime, 0.0f);
@@ -48,6 +49,8 @@ public class SpiderBoss : MonoBehaviour
             CancelInvoke("ChooseAttack");
             animator.Play("ChangeState");
         }
+
+        
     }
 
     public void ChooseAttack()
