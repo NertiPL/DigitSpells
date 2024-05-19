@@ -33,16 +33,25 @@ public class SpellCardPanel : MonoBehaviour
     {
         Debug.Log(transform.position);
         showStatsPanel = transform.parent.GetChild(2).gameObject;
+        UpdateCards();
+    }
+
+    public void UpdateCards()
+    {
+        foreach(Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
         int id = 0;
         foreach (Spells spell in spellsInGame)
         {
-            var card=Instantiate(cardPrefab, transform);
+            var card = Instantiate(cardPrefab, transform);
             card.transform.GetChild(0).GetComponent<TMP_Text>().text = spell.name;
             card.transform.GetChild(1).GetComponent<TMP_Text>().text = spell.description;
             card.GetComponent<SpellCard>().id = id;
             card.GetComponent<SpellCard>().unlocked = true;
 
-            if(!GameManager.instance.unlockedSpells.Contains(spell))
+            if (!GameManager.instance.unlockedSpells.Contains(spell))
             {
                 card.GetComponent<Image>().color = new Color(card.GetComponent<Image>().color.r, card.GetComponent<Image>().color.g, card.GetComponent<Image>().color.b, 0.2f);
                 card.GetComponent<SpellCard>().unlocked = false;

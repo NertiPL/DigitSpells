@@ -5,6 +5,7 @@ using UnityEngine;
 public class UnlockSpells : MonoBehaviour
 {
     public Spells spell;
+    public GameObject spellCardsPanel;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -15,6 +16,8 @@ public class UnlockSpells : MonoBehaviour
                 GameManager.instance.unlockedSpells.Add(spell);
                 GameManager.instance.SFX.clip = GameManager.instance.soundEffects[4];
                 GameManager.instance.SFX.Play();
+                spellCardsPanel.GetComponent<SpellCardPanel>().UpdateCards();
+                Destroy(gameObject);
             }
 
         }

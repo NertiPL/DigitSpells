@@ -6,6 +6,10 @@ using TMPro;
 using System.Text;
 using System.Linq;
 
+using Unity.Jobs;
+using Unity.Burst;
+using Unity.Collections;
+
 public class MathMinigameScript : MonoBehaviour
 {
     int chosenSpellsIndexHolder;
@@ -36,7 +40,6 @@ public class MathMinigameScript : MonoBehaviour
         {
             placeHolders.Add(child.gameObject);
         }
-
     }
 
     public void SlideUp(int chosenSpellsIndex, Difficulty dif)
@@ -45,7 +48,7 @@ public class MathMinigameScript : MonoBehaviour
         usedNums = new List<float>();
         usedGemsObjects = new List<DragableObject>();
         animator.Play("MathPanelSlideAnim");
-        MakeEquastion(dif);
+        MakeEquation(dif);
     }
 
     public void SlideOff()
@@ -90,10 +93,9 @@ public class MathMinigameScript : MonoBehaviour
             }
         }
         GameManager.instance.UpdateEqNums();
-        GameManager.instance.UpdateEqNums();
     }
 
-    public void CheckAnwser()
+    public void CheckAnswer()
     {
         for (int i = placeHolders.Count - 1; i >= 0; i--)
         {
@@ -106,7 +108,6 @@ public class MathMinigameScript : MonoBehaviour
                 usedNums.Add(child.GetComponent<NumDropPlaceHolders>().valueOfGem);
                 usedGemsObjects.Add(child.GetComponent<NumDropPlaceHolders>().draggable);
             }
-
         }
 
         Debug.Log("checked eq: " + equasionCheck.ToString());
@@ -114,21 +115,14 @@ public class MathMinigameScript : MonoBehaviour
         StringToFormula stf = new StringToFormula();
         double resultCheck = stf.Eval(equasionCheck.ToString());
 
-        if (resultCheck == result)
-        {
-            isCorrect = true;
-        }
-        else
-        {
-            isCorrect = false;
-        }
+        isCorrect = resultCheck == result;
 
         SlideOff();
 
         Debug.Log(isCorrect);
     }
 
-    public void MakeEquastion(Difficulty dif)
+    public void MakeEquation(Difficulty dif)
     {
         equasion.Clear();
         equasionShow.Clear();
@@ -174,74 +168,30 @@ public class MathMinigameScript : MonoBehaviour
                 tempNumbersEq.Add(number);
             }
 
+            NativeArray<float> nativeTempNumbersEq = new NativeArray<float>(tempNumbersEq.ToArray(), Allocator.TempJob);
+            NativeArray<int> nativePlaceHolders = new NativeArray<int>(howManyEmpty, Allocator.TempJob);
+
+            var equationJob = new GenerateEquationJob
+            {
+                tempNumbersEq = nativeTempNumbersEq,
+                placeHolders = nativePlaceHolders,
+                howManyEmpty = howManyEmpty,
+                randomSeed = UnityEngine.Random.Range(1, int.MaxValue)
+            };
+
+            JobHandle handle = equationJob.Schedule();
+            handle.Complete();
+
             for (int i = 0; i < howManyEmpty; i++)
             {
-            changeAddedNum:;
-                var randomNum = UnityEngine.Random.Range(0, tempNumbersEq.Count - 1);
-                float addedNumber = tempNumbersEq[randomNum];
-
-                if (checkNextNum)
-                {
-                    if (!hasDiv)
-                    {
-                        foreach (var div in numBeforeDividers)
-                        {
-                            if (addedNumber == div)
-                            {
-                                hasDiv = true;
-                            }
-                        }
-                    }
-
-                    if (hasDiv || tempNumbersEq.Contains(1) || tempNumbersEq.Contains(2) || tempNumbersEq.Contains(4) || tempNumbersEq.Contains(5))
-                    {
-                        if (addedNumber != 0 && (addedNumber == 1 || addedNumber == 2 || addedNumber == 4 || addedNumber == 5 || numBefore % addedNumber == 0))
-                        {
-                            checkNextNum = false;
-                        }
-                        else
-                        {
-                            goto changeAddedNum;
-                        }
-                    }
-                    else
-                    {
-                        checkNextNum = false;
-                        character = UnityEngine.Random.Range(0, 3);
-                        switch (character)
-                        {
-                            case 0:
-                                equasion.Remove(equasion.Length - 2, 2).Append("- ");
-                                equasionShow.Remove(equasionShow.Length - 2, 2).Append("- ");
-                                equasionCheck.Remove(equasionCheck.Length - 1, 1).Append("-");
-                                break;
-
-                            case 1:
-                                equasion.Remove(equasion.Length - 2, 2).Append("+ ");
-                                equasionShow.Remove(equasionShow.Length - 2, 2).Append("+ ");
-                                equasionCheck.Remove(equasionCheck.Length - 1, 1).Append("+");
-                                break;
-
-                            case 2:
-                                equasion.Remove(equasion.Length - 2, 2).Append("* ");
-                                equasionShow.Remove(equasionShow.Length - 2, 2).Append("* ");
-                                equasionCheck.Remove(equasionCheck.Length - 1, 1).Append("*");
-                                break;
-                        }
-                    }
-                }
-
-                equasion.Append(addedNumber).Append(" ");
+                var num = equationJob.tempNumbersEq[i];
+                equasion.Append(num).Append(" ");
                 equasionShow.Append("\u25A1 ");
-
                 equasionCheck.Append(" ");
-
-                tempNumbersEq.RemoveAt(randomNum);
 
                 if (i != howManyEmpty - 1)
                 {
                     character = UnityEngine.Random.Range(0, 4);
-
                     switch (character)
                     {
                         case 0:
@@ -266,14 +216,13 @@ public class MathMinigameScript : MonoBehaviour
                             equasion.Append("/ ");
                             equasionShow.Append("/ ");
                             equasionCheck.Append("/");
-                            numBefore = addedNumber;
-                            numBeforeDividers = GetDivisors((int)addedNumber).ToList();
+                            numBefore = num;
+                            numBeforeDividers = GetDivisors((int)num).ToList();
                             hasDiv = false;
                             checkNextNum = true;
                             break;
                     }
                 }
-
             }
 
             StringToFormula stf = new StringToFormula();
@@ -284,11 +233,14 @@ public class MathMinigameScript : MonoBehaviour
 
             if ((dif == Difficulty.Easy && result > 200) || (dif == Difficulty.Medium && result > 500) || (dif == Difficulty.Hard && result > 1000))
             {
-                MakeEquastion(dif);
+                MakeEquation(dif);
                 goto end;
             }
 
             transform.GetChild(0).GetComponent<TMP_Text>().text = equasionShow.ToString();
+
+            nativeTempNumbersEq.Dispose();
+            nativePlaceHolders.Dispose();
         }
 
     end:;
@@ -315,7 +267,6 @@ public class MathMinigameScript : MonoBehaviour
     {
         return !AscendingOrder ? GetDivisors(n) : GetDivisors(n).OrderBy(x => x);
     }
-
 
     public class StringToFormula
     {
@@ -518,7 +469,6 @@ public class MathMinigameScript : MonoBehaviour
         }
     }
 
-
     void Error()
     {
         transform.GetChild(0).GetComponent<TMP_Text>().text = "Too little numbers.";
@@ -530,5 +480,25 @@ public class MathMinigameScript : MonoBehaviour
         MoveBackUsedGems();
         GameManager.instance.player.GetComponent<PlayerController>().StartCooldown(chosenSpellsIndexHolder, GameManager.instance.chosenSpells[chosenSpellsIndexHolder].cd);
         GameManager.instance.player.GetComponent<PlayerController>().canUseAbility = true;
+    }
+
+    [BurstCompile]
+    private struct GenerateEquationJob : IJob
+    {
+        public NativeArray<float> tempNumbersEq;
+        public NativeArray<int> placeHolders;
+        public int howManyEmpty;
+        public int randomSeed;
+
+        public void Execute()
+        {
+            UnityEngine.Random.InitState(randomSeed);
+            for (int i = 0; i < howManyEmpty; i++)
+            {
+                int randomNum = UnityEngine.Random.Range(0, tempNumbersEq.Length);
+                float addedNumber = tempNumbersEq[randomNum];
+                placeHolders[i] = randomNum;
+            }
+        }
     }
 }
