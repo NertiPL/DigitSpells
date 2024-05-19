@@ -4846,7 +4846,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   intensity: 3
   duration: 5
-  dmg: 0
+  dmg: 5
   spell: {fileID: 11400000, guid: c5a3b9549c3931c41bf971669b912bd2, type: 2}
   virtualCam: {fileID: 0}
   perlinNoise: {fileID: 0}

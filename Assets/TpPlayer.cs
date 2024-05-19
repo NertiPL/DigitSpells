@@ -8,9 +8,12 @@ public class TpPlayer : MonoBehaviour
     public GameObject targetObject; // Obiekt, do którego chcemy siê teleportowaæ
     public float teleportHeightOffset = 2f; // Przesuniêcie w górê
 
-    void Start()
+    void Awake()
     {
-        // SprawdŸ, czy obiekt do teleportacji i obiekt docelowy zosta³y przypisane
+        if (PlayerPrefs.HasKey("posX") && PlayerPrefs.HasKey("posY") && PlayerPrefs.HasKey("posZ")) 
+        {
+            return;
+        }
         if (objectToTeleport != null && targetObject != null)
         {
             // Pobierz pozycjê obiektu docelowego
