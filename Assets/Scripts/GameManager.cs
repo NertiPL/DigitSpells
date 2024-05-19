@@ -507,11 +507,43 @@ public class GameManager : MonoBehaviour
 
     public void GoToMenu()
     {
+        SavePlayerPrefs();
         SceneManager.LoadScene("MainMenu");
     }
 
     public void GameOverResetLvl()
     {
+        SavePlayerPrefs();
+        PlayerPrefs.DeleteKey("posX");
+        PlayerPrefs.DeleteKey("posY");
+        PlayerPrefs.DeleteKey("posZ");
+
+        PlayerPrefs.DeleteKey("rotX");
+        PlayerPrefs.DeleteKey("rotY");
+        PlayerPrefs.DeleteKey("rotZ");
+
+        PlayerPrefs.DeleteKey("unlockedSpells_count");
+        for (int id=0; id<allSpells.Count;id++)
+        {
+            if (PlayerPrefs.HasKey("unlockedSpellsId_" + id.ToString()))
+                PlayerPrefs.DeleteKey("unlockedSpellsId_" + id.ToString());
+        }
+
+        PlayerPrefs.DeleteKey("chosenSpells_count");
+        for (int id = 0; id < allSpells.Count; id++)
+        {
+            if(PlayerPrefs.HasKey("chosenSpellsId_" + id.ToString()))
+                PlayerPrefs.DeleteKey("chosenSpellsId_" + id.ToString());
+        }
+
+        PlayerPrefs.DeleteKey("exp");
+
+        for (int i = 0; i < PlayerPrefs.GetFloat("numbersEq_count"); i++)
+        {
+            PlayerPrefs.DeleteKey("numbersEq_" + i);
+        }
+        PlayerPrefs.DeleteKey("numbersEq_count");
+
         SceneManager.LoadScene("Level1");
     }
 
