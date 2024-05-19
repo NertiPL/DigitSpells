@@ -100,18 +100,22 @@ public class MathMinigameScript : MonoBehaviour
         {
             var child = placeHolders[i];
 
-            if (child.GetComponent<NumDropPlaceHolders>().valueOfGem != 21)
+            if(child.GetComponent<NumDropPlaceHolders>()!=null && child.GetComponent<NumDropPlaceHolders>().placeHolderId - 1 >= 0 && placeHolders[i].active)
             {
-                equasionCheck = equasionCheck.Remove(2 * (child.GetComponent<NumDropPlaceHolders>().placeHolderId - 1), 1);
-                equasionCheck = equasionCheck.Insert(2 * (child.GetComponent<NumDropPlaceHolders>().placeHolderId - 1), child.GetComponent<NumDropPlaceHolders>().valueOfGem.ToString());
-                usedNums.Add(child.GetComponent<NumDropPlaceHolders>().valueOfGem);
-                usedGemsObjects.Add(child.GetComponent<NumDropPlaceHolders>().draggable);
+                if (child.GetComponent<NumDropPlaceHolders>().valueOfGem != 21)
+                {
+                    equasionCheck = equasionCheck.Remove(2 * (child.GetComponent<NumDropPlaceHolders>().placeHolderId - 1), 1);
+                    equasionCheck = equasionCheck.Insert(2 * (child.GetComponent<NumDropPlaceHolders>().placeHolderId - 1), child.GetComponent<NumDropPlaceHolders>().valueOfGem.ToString());
+                    usedNums.Add(child.GetComponent<NumDropPlaceHolders>().valueOfGem);
+                    usedGemsObjects.Add(child.GetComponent<NumDropPlaceHolders>().draggable);
+                }
+                else
+                {
+                    equasionCheck = equasionCheck.Remove(2 * (child.GetComponent<NumDropPlaceHolders>().placeHolderId - 1), 1);
+                    equasionCheck = equasionCheck.Insert(2 * (child.GetComponent<NumDropPlaceHolders>().placeHolderId - 1), "-21");
+                }
             }
-            else
-            {
-                equasionCheck = equasionCheck.Remove(2 * (child.GetComponent<NumDropPlaceHolders>().placeHolderId - 1), 1);
-                equasionCheck = equasionCheck.Insert(2 * (child.GetComponent<NumDropPlaceHolders>().placeHolderId - 1), "-21");
-            }
+            
 
         }
 
